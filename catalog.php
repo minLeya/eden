@@ -69,8 +69,42 @@
 
     <main class="main">
 
-     
- 
+    <!-- <?php
+
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "eden";
+
+        // Создание соединения
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Проверка соединения
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+/*         $sql = "SELECT * FROM product";*/
+        $sql = "SELECT product.*, photo.photo_name, photo.path FROM product
+        INNER JOIN photo ON product.id_photo = photo.id_photo";
+
+        $result = $conn->query($sql);
+
+        // Проверка наличия данных
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="product">';
+                echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
+                echo '<h2 class="name">' . $row['name'] . '</h2>';
+                echo '<p class="price">' . $row['product_price'] . '</p>';
+                echo '<button class="button-add-to-cart">Добавить в корзину</button>';
+                echo '</div>';
+            }
+        } else {
+            echo "Нет товаров в базе данных.";
+        }
+        
+        ?>
+ -->
 
         <section class="catalog">
             <div class="product">
@@ -148,29 +182,5 @@
     </footer>
 
     <script src="js/catalog.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  // Загрузка данных с помощью AJAX
-  $.ajax({
-    url: 'get_products.php', // Путь к вашему PHP-файлу
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) {
-      // Обработка полученных данных
-      var catalogSection = $('.catalog');
-      data.forEach(function(product) {
-        var productHTML = '<div class="product">';
-        productHTML += '<img src="' + product.photo_id + '" alt="' + product.name + '">';
-        productHTML += '<h2 class="name">' + product.name + '</h2>';
-        productHTML += '<p class="price">' + product.product_price + '</p>';
-        productHTML += '<button>Добавить в корзину</button>';
-        productHTML += '</div>';
-        catalogSection.append(productHTML);
-      });
-    }
-  });
-});
-</script>
 </body>
 </html>
