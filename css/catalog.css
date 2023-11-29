@@ -245,3 +245,8 @@ body {
   box-sizing: border-box; /* Учитываем границы и отступы внутри кнопки */
   text-align: center; /* Выравниваем текст кнопки по центру */
 }
+
+.name-link {
+    color:#333;
+    text-decoration: none;
+}

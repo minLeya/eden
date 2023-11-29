@@ -68,10 +68,14 @@
     </div>
 
     <main class="main">
+
+     
+ 
+
         <section class="catalog">
             <div class="product">
                 <img src="img/blouse.jpg" alt="Блузка 1">
-                <h2 class="name">Блузка 1</h2>
+                <h2 class="name"><a href="card.php" class="name-link">Блузка 1</a></h2>
                 <p class="price">50</p>
                 <button class="button-add-to-cart">Добавить в корзину</button>
             </div>
@@ -95,7 +99,7 @@
             </div>
 
             <div class="product">
-                <img src="img/" alt="Блузка 1">
+                <img src="img/blouse.jpg" alt="Блузка 1">
                 <h2 class="name">Блузка 1</h2>
                 <p class="price">50</p>
                 <button class="button-add-to-cart">Добавить в корзину</button>
@@ -144,5 +148,29 @@
     </footer>
 
     <script src="js/catalog.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Загрузка данных с помощью AJAX
+  $.ajax({
+    url: 'get_products.php', // Путь к вашему PHP-файлу
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      // Обработка полученных данных
+      var catalogSection = $('.catalog');
+      data.forEach(function(product) {
+        var productHTML = '<div class="product">';
+        productHTML += '<img src="' + product.photo_id + '" alt="' + product.name + '">';
+        productHTML += '<h2 class="name">' + product.name + '</h2>';
+        productHTML += '<p class="price">' + product.product_price + '</p>';
+        productHTML += '<button>Добавить в корзину</button>';
+        productHTML += '</div>';
+        catalogSection.append(productHTML);
+      });
+    }
+  });
+});
+</script>
 </body>
 </html>

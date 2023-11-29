@@ -60,6 +60,7 @@
 
         <div class="category-text">
             <div class="category-title">Категории</div>
+            <a href="catalog.php" class="category-item">Все товары</a>
             <a href="catalog.php" class="category-item">Рубашки</a>
             <a href="" class="category-item">Футболки</a>
             <a href="" class="category-item">Кофты</a>
