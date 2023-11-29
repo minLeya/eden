@@ -68,10 +68,16 @@
     </div>
 
     <main class="main">
-        <section class="banner-img"> 
-           
+    
+        <section class="products">
+            <div class="product">
+                <img src="dress.jpg" alt="Платье">
+                <h2>Платье</h2>
+                <p class="price">$50</p>
+                 <button>Добавить в корзину</button>
+            </div>
+    <!-- Другие продукты могут быть добавлены здесь -->
         </section>
-      
     </main>
    
     <footer class="footer">

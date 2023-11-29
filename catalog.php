@@ -68,11 +68,60 @@
     </div>
 
     <main class="main">
-        <section class="banner-img"> 
-           
+        <section class="catalog">
+            <div class="product">
+                <img src="img/blouse.jpg" alt="Блузка 1">
+                <h2 class="name">Блузка 1</h2>
+                <p class="price">50</p>
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+            <div class="product">
+                <img src="img/jacketAndSkirt.jpg" alt="Блузка 2">
+                <h2 class="name">Блузка 2</h2>
+                <p class="price">45</p>
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+            <div class="product">
+                <img src="img/top.jpg" alt="Блузка 2">
+                <h2 class="name">Блузка 2</h2> <!-- название связано с бд -->
+                <p class="price">45</p> <!-- связано с бд -->
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+            <div class="product">
+                <img src="img/trousers.jpg" alt="Блузка 2">
+                <h2 class="name">Блузка 2</h2>
+                <p class="price">45</p>
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+
+            <div class="product">
+                <img src="img/" alt="Блузка 1">
+                <h2 class="name">Блузка 1</h2>
+                <p class="price">50</p>
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+            <div class="product">
+                <img src="img/jacketAndSkirt.jpg" alt="Блузка 2">
+                <h2 class="name">Блузка 2</h2>
+                <p class="price">45</p>
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+            <div class="product">
+                <img src="img/top.jpg" alt="Блузка 2">
+                <h2 class="name">Блузка 2</h2> <!-- название связано с бд -->
+                <p class="price">45</p> <!-- связано с бд -->
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+            <div class="product">
+                <img src="img/trousers.jpg" alt="Блузка 2">
+                <h2 class="name">Блузка 2</h2>
+                <p class="price">45</p>
+                <button class="button-add-to-cart">Добавить в корзину</button>
+            </div>
+            <!-- Другие продукты могут быть добавлены здесь -->
         </section>
-      
     </main>
+   
    
     <footer class="footer">
        
