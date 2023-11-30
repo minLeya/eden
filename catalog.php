@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
     <link href="css/catalog.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="img/favicon3.ico">
     <!-- фавикон 2 или 3 -->
