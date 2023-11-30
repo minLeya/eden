@@ -61,9 +61,33 @@
         <div class="category-text">
             <div class="category-title">Категории</div>
             <a href="catalog.php" class="category-item">Все товары</a>
-            <a href="catalog.php" class="category-item">Рубашки</a>
-            <a href="" class="category-item">Свитеры</a>
-            <a href="" class="category-item">Платья</a>
+        <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "eden";
+
+            // Создание соединения
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Проверка соединения
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // SQL-запрос для получения списка категорий
+            $sql = "SELECT * FROM category";
+            $result = $conn->query($sql);
+
+            // Проверка наличия данных
+            if ($result->num_rows > 0) {
+                // Вывод списка категорий
+                while ($row = $result->fetch_assoc()) {
+                    echo '<a href="catalog.php?category=' . $row['id_category'] . '" class="category-item">' . $row['category_name'] . '</a>';
+                }
+            }
+            $conn->close();
+        ?>
         </div>
         
     </div>
@@ -88,8 +112,10 @@
        <section class="contacts">
         <div class="contacts-title">Контакты</div>
         <ul class="contacts-menu">
-            <li class="contacts-item"><a href="#mytg" class="contacts-link">Telegram</a></li>
+            <li class="contacts-item"><a href="https://t.me/sweetieleya" class="contacts-link">Telegram</a></li>
             <li class="contacts-item"><a href="https://www.flaticon.com/ru/free-icons/-n" class="contacts-link">favicon</a></li>
+            <li class="contacts-item"><a href="https://zarina.ru/" class="contacts-link">photos</a></li>
+
         </ul>
        </section>
        

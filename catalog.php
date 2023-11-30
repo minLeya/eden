@@ -12,7 +12,6 @@
 </head>
 <body>
     <header class="header">
-        
         <div class="container">
 
             <div class="hamburger" id="hamburger">
@@ -48,15 +47,12 @@
     <div class="category" id="category">
 
         <div class="category-icon">
-
             <div class="close" id="close">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                 </svg>
             </div>
-
             <div class="logo-title"><a href="index.php" class="logo-link">eden</a></div>
-
         </div>
 
         <div class="category-text">
@@ -87,64 +83,59 @@
                     echo '<a href="catalog.php?category=' . $row['id_category'] . '" class="category-item">' . $row['category_name'] . '</a>';
                 }
             }
-
-            // Закрытие соединения
             $conn->close();
         ?>
-
         </div>
         
     </div>
 
     <main class="main">
 
-    <section class="catalog">
-    <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "eden";
+        <section class="catalog">
+        <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "eden";
 
-        // Создание соединения
-        $conn = new mysqli($servername, $username, $password, $dbname);
+            // Создание соединения
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Проверка соединения
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $categoryFilter = isset($_GET['category']) ? $_GET['category'] : '';
-
-        // SQL-запрос для получения данных о товарах и их фотографиях с учетом фильтрации
-        $sql = "SELECT product.*, photo.path 
-                FROM product
-                INNER JOIN photo ON product.id_photo = photo.id_photo";
-
-        if (!empty($categoryFilter)) {
-            $sql .= " WHERE product.id_category = '$categoryFilter'";
-        }
-
-        $result = $conn->query($sql);
-        // Проверка наличия данных
-        if ($result->num_rows > 0) {
-            // Вывод данных о товарах в виде карточек
-            while ($row = $result->fetch_assoc()) {
-                echo '<div class="product">';
-                echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
-                echo '<h2 class="name"><a class="name-link">' . $row['name'] . '</a></h2>';
-                echo '<p class="price">' . $row['product_price'] . ' ₽</p>';
-                echo '<button class="button-add-to-cart">Добавить в корзину</button>';
-                echo '</div>';
+            // Проверка соединения
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
             }
-        } else {
-            echo "Нет товаров в базе данных.";
-        }
 
-        // Закрытие соединения
-        $conn->close();
-    ?>
+            $categoryFilter = isset($_GET['category']) ? $_GET['category'] : '';
 
- 
+            // SQL-запрос для получения данных о товарах и их фотографиях с учетом фильтрации
+            $sql = "SELECT product.*, photo.path 
+                    FROM product
+                    INNER JOIN photo ON product.id_photo = photo.id_photo";
+
+            if (!empty($categoryFilter)) {
+                $sql .= " WHERE product.id_category = '$categoryFilter'";
+            }
+
+            $result = $conn->query($sql);
+            // Проверка наличия данных
+            if ($result->num_rows > 0) {
+                // Вывод данных о товарах в виде карточек
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="product">';
+                    echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
+                    echo '<h2 class="name"><a class="name-link">' . $row['name'] . '</a></h2>';
+                    echo '<p class="price">' . $row['product_price'] . ' ₽</p>';
+                    echo '<button class="button-add-to-cart">Добавить в корзину</button>';
+                    echo '</div>';
+                }
+            } else {
+                echo "Нет товаров в базе данных.";
+            }
+            $conn->close();
+        ?>
+
+    
         </section>
     </main>
    
@@ -162,8 +153,10 @@
        <section class="contacts">
         <div class="contacts-title">Контакты</div>
         <ul class="contacts-menu">
-            <li class="contacts-item"><a href="#mytg" class="contacts-link">Telegram</a></li>
+            <li class="contacts-item"><a href="https://t.me/sweetieleya" class="contacts-link">Telegram</a></li>
             <li class="contacts-item"><a href="https://www.flaticon.com/ru/free-icons/-n" class="contacts-link">favicon</a></li>
+            <li class="contacts-item"><a href="https://zarina.ru/" class="contacts-link">photos</a></li>
+
         </ul>
        </section>
        
