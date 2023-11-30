@@ -125,7 +125,7 @@
                 while ($row = $result->fetch_assoc()) {
                     echo '<div class="product">';
                     echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
-                    echo '<h2 class="name"><a class="name-link">' . $row['name'] . '</a></h2>';
+                    echo '<h2 class="name"><a class="name-link" href="card.php">' . $row['name'] . '</a></h2>';
                     echo '<p class="price">' . $row['product_price'] . ' ₽</p>';
                     echo '<button class="button-add-to-cart">Добавить в корзину</button>';
                     echo '</div>';
