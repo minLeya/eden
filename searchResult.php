@@ -1,3 +1,5 @@
+
+<!-- может уберу -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/catalog.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="img/favicon3.ico">
-    <title>Карта</title>
+    <!-- фавикон 2 или 3 -->
+    <title>Каталог</title>
     
 </head>
 <body>
@@ -90,8 +93,58 @@
 
     <main class="main">
 
-        
-      
+    <form method="GET" action="catalog.php">
+        <div class="search" id="search-icon">
+            <input type="text" name="search" placeholder="Поиск по названию товара">
+            <button type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
+                    <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
+                    <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
+                </svg>
+            </button>
+        </div>
+    </form>
+
+    <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "eden";
+
+        // Создание соединения
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Проверка соединения
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Определение введенного пользователем запроса
+        $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+
+        // SQL-запрос для поиска товаров по названию
+        $sql = "SELECT product.*, photo.path 
+                FROM product
+                INNER JOIN photo ON product.id_photo = photo.id_photo
+                WHERE product.name LIKE '%$searchTerm%'";
+
+        $result = $conn->query($sql);
+
+        // Проверка наличия данных
+        if ($result->num_rows > 0) {
+            // Вывод данных о товарах в виде карточек
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="product">';
+                echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
+                echo '<h2 class="name"><a class="name-link">' . $row['name'] . '</a></h2>';
+                echo '<p class="price">' . $row['product_price'] . ' ₽</p>';
+                echo '<button class="button-add-to-cart">Добавить в корзину</button>';
+                echo '</div>';
+            }
+        } else {
+            echo "Нет товаров, соответствующих запросу.";
+        }
+        ?>
     </main>
    
    

@@ -139,7 +139,6 @@
    
    
     <footer class="footer">
-       
        <section class="help">
         <div class="help-title">Помощь</div>
         <ul class="help-menu">

@@ -96,7 +96,6 @@
         <section class="banner-img"> 
             <img src="img/banner.jpg" alt="banner">
         </section>
-      
     </main>
    
     <footer class="footer">
