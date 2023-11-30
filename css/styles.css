@@ -68,8 +68,7 @@
     left:0;
     transition: left 0.3s;
     z-index: 1;
-    
-    flex-direction: column; /* Добавьте это */
+    flex-direction: column;
 }
 
 .category-text {
@@ -113,18 +112,6 @@
     padding: 5px;
     border-bottom: 1px solid black;
 }
-
-/* кнопка поиска */
-/* #search-button {
-    padding: 2px 6px;
-    background-color: black;
-    color: #fff;
-    font-size: 10;g
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-} */
 
 /* Стили для поле поиска */
 .transparent-input {

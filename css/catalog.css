@@ -19,8 +19,7 @@ body {
     font-weight:bold; 
     color:black;
     font-size: 300%;
-    margin-left: 5px; /* движение по горизонтали NAME */
-
+    margin-left: 5px; 
 }
 
 .header {
@@ -72,8 +71,7 @@ body {
     left:0;
     transition: left 0.3s;
     z-index: 1;
-    
-    flex-direction: column; /* Добавьте это */
+    flex-direction: column;
 }
 
 .category-text {
@@ -118,8 +116,7 @@ body {
     border-bottom: 1px solid black;
 }
 
-
-/* Стили для поле поиска */
+/* Стили для поля поиска */
 .transparent-input {
     background: transparent; /* Делаем фон поля поиска прозрачным */
     border: none;
@@ -178,16 +175,6 @@ body {
 
 /* main */
 .main {
-  /*   flex:1;
-    position: relative;
-    width: 100%;
-    height: 100vh; 
-    overflow: hidden;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;  */
-   /*  overflow-y: auto; */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Автоматическое масштабирование колонок */
     gap: 20px; /* Расстояние между карточками */

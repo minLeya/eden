@@ -100,7 +100,6 @@
     </main>
    
     <footer class="footer">
-       
        <section class="help">
         <div class="help-title">Помощь</div>
         <ul class="help-menu">
@@ -115,10 +114,8 @@
             <li class="contacts-item"><a href="https://t.me/sweetieleya" class="contacts-link">Telegram</a></li>
             <li class="contacts-item"><a href="https://www.flaticon.com/ru/free-icons/-n" class="contacts-link">favicon</a></li>
             <li class="contacts-item"><a href="https://zarina.ru/" class="contacts-link">photos</a></li>
-
         </ul>
        </section>
-       
     </footer>
 
     <script src="js/script.js"></script>
