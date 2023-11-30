@@ -25,7 +25,7 @@ body {
 
 .header {
     padding:15px;
-    background: rgba(255, 255, 255, 0);  
+    background: rgb(241, 241, 241);  
     position: fixed; 
     width: 100%; 
     z-index: 1; 
@@ -118,17 +118,6 @@ body {
     border-bottom: 1px solid black;
 }
 
-/* кнопка поиска */
-/* #search-button {
-    padding: 2px 6px;
-    background-color: black;
-    color: #9E9E9E;
-    font-size: 10;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 5px;
-} */
 
 /* Стили для поле поиска */
 .transparent-input {
@@ -151,11 +140,6 @@ body {
     align-items: center;
     margin-right: 20px;
 }
-
-
-  
-
-
 
 /* футер закончен */
 .footer {
@@ -194,7 +178,7 @@ body {
 
 /* main */
 .main {
-    flex:1;
+  /*   flex:1;
     position: relative;
     width: 100%;
     height: 100vh; 
@@ -202,8 +186,11 @@ body {
     padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: flex-start; 
-    overflow-y: auto;
+    align-items: flex-start;  */
+   /*  overflow-y: auto; */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Автоматическое масштабирование колонок */
+    gap: 20px; /* Расстояние между карточками */
 }
 
 .catalog {
@@ -213,13 +200,14 @@ body {
     margin-top: 150px;
     width: 100%;
 }
-  
+
 .product {
     text-align: none;
     padding: 0px;
     border: none;
     width: 300px;
-    margin-top: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
   
 .product img {

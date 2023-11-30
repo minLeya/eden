@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="img/favicon3.ico">
     <!-- фавикон 2 или 3 -->
     <title>Каталог</title>
+    
 </head>
 <body>
     <header class="header">
@@ -54,23 +55,51 @@
                 </svg>
             </div>
 
-            <div class="logo-title"><a href="index.html" class="logo-link">eden</a></div>
+            <div class="logo-title"><a href="index.php" class="logo-link">eden</a></div>
 
         </div>
 
         <div class="category-text">
             <div class="category-title">Категории</div>
-            <a href="catalog.php" class="category-item">Рубашки</a>
-            <a href="" class="category-item">Футболки</a>
-            <a href="" class="category-item">Кофты</a>
+            <a href="catalog.php" class="category-item">Все товары</a>
+        <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "eden";
+
+            // Создание соединения
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Проверка соединения
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // SQL-запрос для получения списка категорий
+            $sql = "SELECT * FROM category";
+            $result = $conn->query($sql);
+
+            // Проверка наличия данных
+            if ($result->num_rows > 0) {
+                // Вывод списка категорий
+                while ($row = $result->fetch_assoc()) {
+                    echo '<a href="catalog.php?category=' . $row['id_category'] . '" class="category-item">' . $row['category_name'] . '</a>';
+                }
+            }
+
+            // Закрытие соединения
+            $conn->close();
+        ?>
+
         </div>
         
     </div>
 
     <main class="main">
 
-    <!-- <?php
-
+    <section class="catalog">
+    <?php
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -83,80 +112,39 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-/*         $sql = "SELECT * FROM product";*/
-        $sql = "SELECT product.*, photo.photo_name, photo.path FROM product
-        INNER JOIN photo ON product.id_photo = photo.id_photo";
+
+        $categoryFilter = isset($_GET['category']) ? $_GET['category'] : '';
+
+        // SQL-запрос для получения данных о товарах и их фотографиях с учетом фильтрации
+        $sql = "SELECT product.*, photo.path 
+                FROM product
+                INNER JOIN photo ON product.id_photo = photo.id_photo";
+
+        if (!empty($categoryFilter)) {
+            $sql .= " WHERE product.id_category = '$categoryFilter'";
+        }
 
         $result = $conn->query($sql);
-
         // Проверка наличия данных
         if ($result->num_rows > 0) {
+            // Вывод данных о товарах в виде карточек
             while ($row = $result->fetch_assoc()) {
                 echo '<div class="product">';
                 echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
-                echo '<h2 class="name">' . $row['name'] . '</h2>';
-                echo '<p class="price">' . $row['product_price'] . '</p>';
+                echo '<h2 class="name"><a class="name-link">' . $row['name'] . '</a></h2>';
+                echo '<p class="price">' . $row['product_price'] . ' ₽</p>';
                 echo '<button class="button-add-to-cart">Добавить в корзину</button>';
                 echo '</div>';
             }
         } else {
             echo "Нет товаров в базе данных.";
         }
-        
-        ?>
- -->
 
-        <section class="catalog">
-            <div class="product">
-                <img src="img/blouse.jpg" alt="Блузка 1">
-                <h2 class="name"><a href="card.php" class="name-link">Блузка 1</a></h2>
-                <p class="price">50</p>
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
-            <div class="product">
-                <img src="img/jacketAndSkirt.jpg" alt="Блузка 2">
-                <h2 class="name">Блузка 2</h2>
-                <p class="price">45</p>
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
-            <div class="product">
-                <img src="img/top.jpg" alt="Блузка 2">
-                <h2 class="name">Блузка 2</h2> <!-- название связано с бд -->
-                <p class="price">45</p> <!-- связано с бд -->
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
-            <div class="product">
-                <img src="img/trousers.jpg" alt="Блузка 2">
-                <h2 class="name">Блузка 2</h2>
-                <p class="price">45</p>
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
+        // Закрытие соединения
+        $conn->close();
+    ?>
 
-            <div class="product">
-                <img src="img/blouse.jpg" alt="Блузка 1">
-                <h2 class="name">Блузка 1</h2>
-                <p class="price">50</p>
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
-            <div class="product">
-                <img src="img/jacketAndSkirt.jpg" alt="Блузка 2">
-                <h2 class="name">Блузка 2</h2>
-                <p class="price">45</p>
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
-            <div class="product">
-                <img src="img/top.jpg" alt="Блузка 2">
-                <h2 class="name">Блузка 2</h2> <!-- название связано с бд -->
-                <p class="price">45</p> <!-- связано с бд -->
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
-            <div class="product">
-                <img src="img/trousers.jpg" alt="Блузка 2">
-                <h2 class="name">Блузка 2</h2>
-                <p class="price">45</p>
-                <button class="button-add-to-cart">Добавить в корзину</button>
-            </div>
-            <!-- Другие продукты могут быть добавлены здесь -->
+ 
         </section>
     </main>
    
