@@ -1,0 +1,66 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999; 
+}
+
+.list-of-products{
+    margin:200px;
+    margin-top: 157px;
+    margin-bottom:50px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.product img {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.product-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+}
+
+
+button:hover {
+    background-color: #ff00009e;
+}
+
+.product-info button {
+    height: 35px;
+    width: 85px;
+    background-color: black;
+    border-radius: 19px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 35px; /* Устанавливаем высоту кнопки равной высоте текста */
+
+}

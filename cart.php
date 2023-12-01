@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/catalog.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+    <link href="css/cart.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="img/favicon3.ico">
-    <!-- фавикон 2 или 3 -->
     <title>Корзина</title>
 </head>
 <body>
@@ -68,16 +68,59 @@
     </div>
 
     <main class="main">
+    <h1 class="title">Корзина</h1>
+       <div class="list-of-products">
+            <ul>
+            <li class="product">
+                <img src="img/top.jpg" alt="Product Image">
+                <div class="product-info">
+                    <div class="product-details">
+                        <p>Цена: $50</p>
+                        <p>Размер: S</p>
+                        <p>Количество: 2</p>
+                    </div>
+                    <button>Удалить</button>
+                </div>
+            </li>
+            <li class="product">
+                <img src="path/to/image2.jpg" alt="Product Image">
+                <div class="product-info">
+                    <div class="product-details">
+                        <p>Цена: $40</p>
+                        <p>Размер: M</p>
+                        <p>Количество: 1</p>
+                    </div>
+                    <button>Удалить</button>
+                </div>
+            </li>
+            </ul>
+        </div> 
+       <!--  <h1 class="title">Корзина</h1>
     
-        <section class="products">
-            <div class="product">
-                <img src="dress.jpg" alt="Платье">
-                <h2>Платье</h2>
-                <p class="price">$50</p>
-                 <button>Добавить в корзину</button>
+        <div class="cart-items">
+            <div class="cart-item">
+                <img src="path/to/image1.jpg" alt="Product Image">
+                <div class="cart-item-details">
+                    <p class="product-name">Название продукта</p>
+                    <p class="product-price">$50</p>
+                    <div class="product-quantity">
+                        <button class="quantity-btn">-</button>
+                        <span class="quantity">2</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <div class="product-size">
+                        <label for="size">Размер:</label>
+                        <select id="size">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="remove-btn">Удалить</button>
             </div>
-    <!-- Другие продукты могут быть добавлены здесь -->
-        </section>
+        </div> -->
+      
     </main>
    
     <footer class="footer">
