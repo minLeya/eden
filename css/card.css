@@ -9,11 +9,11 @@
 .product-card {
 
     display: flex;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
+   /*  border: 1px solid #e0e0e0;
+    border-radius: 5px; */
     overflow: hidden;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Эффект тени для карточки */
+   /*  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */ /* Эффект тени для карточки */
     margin-top: 100px;
 }
 
@@ -69,3 +69,24 @@
     color: white; /* Цвет текста */
     padding: 10px 20px; /* Отступы внутри кнопки */
   }
+
+  .size-box {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    margin-right: 6px;
+    background-color: #f4f4f4;
+    border: 1px solid #000000; /* or #ccc */
+    border-radius: 3px;
+
+    text-align: center;
+
+    line-height: 33px;
+    cursor: pointer;
+    display: inline-block;
+ 
+}
+
+.selected {
+    background-color: lightgray;
+}

@@ -4,8 +4,9 @@
 }
 
 body {
-    background-color: #EFEFEF;
+/*     background-color: #EFEFEF;*/
     overflow: auto;
+    background-color: white;
 }
 .container {
     display: flex;

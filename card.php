@@ -115,54 +115,58 @@
     <main class="main">
         <div class="product-center">
             <div class="product-card">
+            
             <?php
-                // Подключение к базе данных
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "eden";
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "eden";
 
-                $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
 
-                // Получение id товара из GET-запроса (предположим, что id передается через URL)
-                $product_id = $_GET['id_product']; // Исправлено имя переменной
+            $product_id = $_GET['id_product'];
 
-                // SQL-запрос для получения информации о товаре
-                $sql = "SELECT product.*, photo.path, sizes.rus_size
-                        FROM product
-                        INNER JOIN photo ON product.id_photo = photo.id_photo
-                        INNER JOIN available_sizes ON product.id_product = available_sizes.id_product
-                        INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
-                        WHERE product.id_product = $product_id";
+            $sql = "SELECT product.*, photo.path, GROUP_CONCAT(sizes.rus_size) AS all_sizes
+                    FROM product
+                    INNER JOIN photo ON product.id_photo = photo.id_photo
+                    INNER JOIN available_sizes ON product.id_product = available_sizes.id_product
+                    INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+                    WHERE product.id_product = $product_id
+                    GROUP BY product.id_product"; 
 
-                $result = $conn->query($sql);
+            $result = $conn->query($sql);
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo '<div class="product-image">';
-                        echo '<img src="' . $row['path'] . '" alt="product-name">';
-                        echo '</div>';
-                        echo '<div class="product-info">';
-                        echo '<h2 class="product-name">' . $row['name'] . '</h2>';
-                        echo '<p class="product-price">$' . $row['product_price'] . '</p>';
-                        echo '<div class="available-sizes">';
-                        echo '<ul>';
-                        echo '<li>' . $row['rus_size'] . '</li>';
-                        // Другие размеры могут быть добавлены аналогичным образом
-                        echo '</ul>';
-                        echo '</div>';
-                        echo '<button class="button-add-to-cart">Добавить в корзину</button>';
-                        echo '</div>';
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="product-image">';
+                    echo '<img src="' . $row['path'] . '" alt="product-name">';
+                    echo '</div>';
+                    echo '<div class="product-info">';
+                    echo '<h2 class="product-name">' . $row['name'] . '</h2>';
+                    echo '<p class="product-price">' . $row['product_price'] . ' ₽</p>';
+                    echo '<div class="available-sizes">';
+
+                    // Разделение размеров и вывод в белых квадратах
+                    $sizes = explode(",", $row['all_sizes']);
+                    foreach ($sizes as $size) {
+                        echo '<span class="size-box" >' . trim($size) . '</span>';   
                     }
-                } else {
-                    echo "Нет информации о товаре.";
+
+                    echo '</div>';
+                    echo '<button class="button-add-to-cart">Добавить в корзину</button>';
+                    echo '</div>';
                 }
-                $conn->close();
-                ?>
+            } else {
+                echo "Нет информации о товаре.";
+            }
+            $conn->close();
+            ?>
+
+
 
             </div>
         </div>
@@ -188,5 +192,6 @@
     </footer>
 
     <script src="js/catalog.js"></script>
+    <script src="js/card.js"></script>
 </body>
 </html>
