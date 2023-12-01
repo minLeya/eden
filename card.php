@@ -87,30 +87,6 @@
         ?>
         </div>
     </div>
-
-
-<!--     <main class="main">
-        <div class="product-center">
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="img/blouse.jpg" alt="product-name">
-                </div>
-                <div class="product-info">
-                    <h2 class="product-name">Название товара</h2>
-                    <p class="product-price">$100</p>
-                    <div class="available-sizes">
-                        <ul>
-                            <li>S</li>
-                            <li>M</li>
-                            <li>L</li>
-                        </ul>
-                    </div>
-                    <button class="button-add-to-cart">Добавить в корзину</button>
-                </div>
-            </div>
-        </div>
-    </main>
- -->
    
     <main class="main">
         <div class="product-center">

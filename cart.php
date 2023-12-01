@@ -47,24 +47,45 @@
     <div class="category" id="category">
 
         <div class="category-icon">
-
             <div class="close" id="close">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
                 </svg>
             </div>
-
-            <div class="logo-title"><a href="index.html" class="logo-link">eden</a></div>
-
+            <div class="logo-title"><a href="index.php" class="logo-link">eden</a></div>
         </div>
 
         <div class="category-text">
             <div class="category-title">Категории</div>
-            <a href="catalog.php" class="category-item">Рубашки</a>
-            <a href="" class="category-item">Футболки</a>
-            <a href="" class="category-item">Кофты</a>
+            <a href="catalog.php" class="category-item">Все товары</a>
+        <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "eden";
+
+            // Создание соединения
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Проверка соединения
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // SQL-запрос для получения списка категорий
+            $sql = "SELECT * FROM category";
+            $result = $conn->query($sql);
+
+            // Проверка наличия данных
+            if ($result->num_rows > 0) {
+                // Вывод списка категорий
+                while ($row = $result->fetch_assoc()) {
+                    echo '<a href="catalog.php?category=' . $row['id_category'] . '" class="category-item">' . $row['category_name'] . '</a>';
+                }
+            }
+            $conn->close();
+        ?>
         </div>
-        
     </div>
 
     <main class="main">
@@ -72,55 +93,39 @@
        <div class="list-of-products">
             <ul>
             <li class="product">
-                <img src="img/top.jpg" alt="Product Image">
+                
+                <img src="img/top.jpg" alt="product-image">
                 <div class="product-info">
                     <div class="product-details">
-                        <p>Цена: $50</p>
-                        <p>Размер: S</p>
-                        <p>Количество: 2</p>
+                        <div class="product-detail-item">Название</div>
+                        <div class="product-detail-item">Цена: 50 Р</div>
+                        <div class="product-detail-item">Размер: S</div>
+                        <div class="product-detail-item">Количество: 2</div>
                     </div>
                     <button>Удалить</button>
                 </div>
             </li>
             <li class="product">
-                <img src="path/to/image2.jpg" alt="Product Image">
+            <img src="img/top.jpg" alt="product-image">
                 <div class="product-info">
                     <div class="product-details">
-                        <p>Цена: $40</p>
-                        <p>Размер: M</p>
-                        <p>Количество: 1</p>
+                        <div class="product-detail-item">Название</div>
+                        <div class="product-detail-item">Цена: 50 Р</div>
+                        <div class="product-detail-item">Размер: S</div>
+                        <div class="product-detail-item">Количество: 2</div>
                     </div>
                     <button>Удалить</button>
                 </div>
             </li>
             </ul>
         </div> 
-       <!--  <h1 class="title">Корзина</h1>
-    
-        <div class="cart-items">
-            <div class="cart-item">
-                <img src="path/to/image1.jpg" alt="Product Image">
-                <div class="cart-item-details">
-                    <p class="product-name">Название продукта</p>
-                    <p class="product-price">$50</p>
-                    <div class="product-quantity">
-                        <button class="quantity-btn">-</button>
-                        <span class="quantity">2</span>
-                        <button class="quantity-btn">+</button>
-                    </div>
-                    <div class="product-size">
-                        <label for="size">Размер:</label>
-                        <select id="size">
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                        </select>
-                    </div>
-                </div>
-                <button class="remove-btn">Удалить</button>
-            </div>
-        </div> -->
-      
+
+        <div class="summary">
+            <p class="quantity-and-total-price">Количество <span>Общая стоимость товаров</span></p>
+            <p class="quantity-and-total-price-value">2 ед. <span>1199888888 руб.</span></p>
+        </div>
+
+
     </main>
    
     <footer class="footer">

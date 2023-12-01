@@ -6,7 +6,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="img/favicon3.ico">
-    <!-- фавикон 2 или 3 -->
     <title>EDEN | Магазин женской одежды</title>
 </head>
 <body>

@@ -8,7 +8,7 @@
 
 .list-of-products{
     margin:200px;
-    margin-top: 157px;
+    margin-top: 30px;
     margin-bottom:50px;
 }
 
@@ -26,7 +26,7 @@ ul {
 }
 
 .product img {
-    width: 100px;
+    width: 120px;
     height: auto;
     margin-right: 20px;
 }
@@ -41,11 +41,18 @@ ul {
 .product-details {
     display: flex;
     flex-direction: column;
+    color: black;
 }
 
+.product-detail-item {
+    padding: 2px 0; /* Регулируемый отступ между элементами */
+    font-size: 90%;
+/*     text-transform: uppercase;
+ */}
 
-button:hover {
-    background-color: #ff00009e;
+
+.product-info button:hover {
+    background-color: rgba(142, 6, 6, 0.812);
 }
 
 .product-info button {
@@ -62,5 +69,34 @@ button:hover {
     justify-content: center;
     align-items: center;
     line-height: 35px; /* Устанавливаем высоту кнопки равной высоте текста */
-
 }
+
+.title{
+    font-size:150%;
+    margin-left: 200px;
+    margin-top:150px;
+    text-transform: uppercase;
+    font-weight: 520;
+}
+
+.summary {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-bottom: 30px;
+}
+
+.quantity-and-total-price, .quantity-and-total-price-value {
+    display: flex;
+    flex-direction: column;
+}
+
+.quantity-and-total-price p, .quantity-and-total-price-value p {
+    margin-bottom: 5px; /* Отступ между текстом и числами */
+}
+
+.quantity-and-total-price span, .quantity-and-total-price-value span {
+    margin-left: auto; /* Помещаем числа вправо */
+}
+

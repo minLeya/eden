@@ -7,24 +7,9 @@ searchIcon.addEventListener("click", () => {
     searchInputContainer.style.display = "block";
 });
 
-// Добавьте обработчик события для скрытия поля ввода и кнопки поиска при нажатии на кнопку "Искать"
-/* const searchButton = document.getElementById("search-button");
-searchButton.addEventListener("click", () => {
-    searchInputContainer.style.display = "none";
-}); */
-
 const hamburgerButton = document.getElementById("hamburger");
 const categoryMenu = document.getElementById("category");
 const closeButton = document.getElementById("close");
-
-
-/* hamburgerButton.addEventListener("click", () => {
-    if (categoryMenu.style.display === "none") {
-        categoryMenu.style.display = "block";
-    } else {
-        categoryMenu.style.display = "none";
-    }
-}); */
 
 hamburgerButton.addEventListener("click", () => {
     const computedStyle = window.getComputedStyle(categoryMenu);
@@ -40,3 +25,23 @@ closeButton.addEventListener("click", () => {
         categoryMenu.style.display = "none";
     } 
 });
+
+
+   /*  // Функция для добавления товара в корзину
+    function addToCart(productId, sizeId) {
+        // Определяем количество товаров (можно увеличить на 1 каждый раз при нажатии)
+        var quantity = 1;
+
+        // Отправляем AJAX-запрос на сервер для добавления в корзину
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'addToCart.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Обработка ответа от сервера (если необходимо)
+                console.log(xhr.responseText);
+            }
+        };
+        // Отправляем данные о товаре и размере
+        xhr.send('productId=' + productId + '&sizeId=' + sizeId + '&quantity=' + quantity);
+    } */
