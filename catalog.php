@@ -7,7 +7,6 @@
     <link href="css/common.css" rel="stylesheet">
     <link href="css/catalog.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="img/favicon3.ico">
-    <!-- фавикон 2 или 3 -->
     <title>Каталог</title>
     
 </head>
@@ -125,12 +124,15 @@
                 while ($row = $result->fetch_assoc()) {
                     echo '<div class="product">';
                     echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
+                    
                     // Передача id_product через GET-параметр в URL страницы card.php при клике на название товара
                     echo '<h2 class="name"><a class="name-link" href="card.php?id_product=' . $row['id_product'] . '">' . $row['name'] . '</a></h2>';
       
                     echo '<p class="price">' . $row['product_price'] . ' ₽</p>';
-                    /* echo '<button class="button-add-to-cart">Добавить в корзину</button>'; */
+                    /* echo '<button class="button-add-to-cart">Добавить в корзину</button>'; */ /* убрала кнопку */
                     echo '</div>';
+
+                    /* осталось применить стили чтобы карточка выглядела нормально */
                 }
             } else {
                 echo "Нет товаров в базе данных.";

@@ -1,3 +1,58 @@
+<?php
+// Проверяем, был ли отправлен POST запрос для добавления в корзину
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+
+    // Подключение к базе данных
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "eden";
+
+    // Создание соединения
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Проверка соединения
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Получаем данные из POST запроса
+    $product_id = $_GET['id_product']; // Получаем ID товара, предполагается что он передан в URL
+    $selected_size = $_POST['selected_size']; // Получаем выбранный размер из формы, подставьте реальное имя вашего поля
+
+    // Проверяем, выбран ли размер
+    if (empty($selected_size)) {
+        echo 'Выберите размер перед добавлением в корзину';
+    } else {
+        // Выбранный размер не пустой - обрабатываем добавление в корзину
+
+        // Ваш SQL запрос для добавления товара в корзину
+        $sql = "INSERT INTO cart (id_product, id_size, quantity) VALUES (?, ?, 1)";
+
+        // Подготовка запроса
+        $stmt = $conn->prepare($sql);
+
+        // Привязываем параметры к запросу
+        $stmt->bind_param("ii", $product_id, $selected_size);
+
+        // Выполняем запрос
+        if ($stmt->execute()) {
+            echo 'Товар успешно добавлен в корзину!';
+        } else {
+            echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+        }
+
+        // Закрываем соединение
+        $stmt->close();
+    }
+
+    // Закрываем соединение с базой данных
+    $conn->close();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +93,8 @@
                 <!-- инконка корзины -->
                 <div class="cart"> <a href="cart.php" class="cart-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                  </svg></a></div> 
+                  </svg></a>
+                </div> 
 
             </div>
         </div>
@@ -106,7 +162,7 @@
 
             $product_id = $_GET['id_product'];
 
-            $sql = "SELECT product.*, photo.path, GROUP_CONCAT(sizes.rus_size) AS all_sizes
+                    $sql = "SELECT product.*, photo.path, GROUP_CONCAT(sizes.id_size) AS all_size_ids, GROUP_CONCAT(sizes.rus_size) AS all_sizes
                     FROM product
                     INNER JOIN photo ON product.id_photo = photo.id_photo
                     INNER JOIN available_sizes ON product.id_product = available_sizes.id_product
@@ -124,16 +180,54 @@
                     echo '<div class="product-info">';
                     echo '<h2 class="product-name">' . $row['name'] . '</h2>';
                     echo '<p class="product-price">' . $row['product_price'] . ' ₽</p>';
-                    echo '<div class="available-sizes">';
 
-                    // Разделение размеров и вывод в белых квадратах
-                    $sizes = explode(",", $row['all_sizes']);
+                   
+
+                  /*   echo '<div class="available-sizes">';
+
+                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">'; */
+
+            
+
+                 /*    $sizes = explode(",", $row['all_sizes']);
                     foreach ($sizes as $size) {
-                        echo '<span class="size-box" >' . trim($size) . '</span>';   
+                        echo '<input type="radio" id="' . trim($size) . '" name="selected_size" value="' . trim($size) . '" style="display: none;">';
+                        echo '<label for="' . trim($size) . '" class="size-box" style="cursor: pointer;">' . trim($size) . '</label>';
+                    } */
+
+                   /*  echo '<div class="available-sizes">';
+                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
+
+                    $sizes = explode(",", $row['all_size_ids']); // Получаем массив id_size
+                    $russian_sizes = explode(",", $row['all_sizes']); // Получаем массив rus_size
+
+                    for ($i = 0; $i < count($sizes); $i++) {
+                        echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($russian_sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
+                        echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
                     }
 
-                    echo '</div>';
-                    echo '<button class="button-add-to-cart">Добавить в корзину</button>';
+                    echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
+                    echo '</form>';
+                    echo '</div>'; */
+
+                    
+                  /*   echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
+                    echo '</form>';
+                    echo '</div>'; */
+
+                    echo '<div class="available-sizes">';
+                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
+
+                    $sizes = explode(",", $row['all_size_ids']); // Получаем массив id_size
+                    $russian_sizes = explode(",", $row['all_sizes']); // Получаем массив rus_size
+
+                    for ($i = 0; $i < count($sizes); $i++) {
+                        echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
+                        echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
+                    }
+
+                    echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
+                    echo '</form>';
                     echo '</div>';
                 }
             } else {
@@ -141,7 +235,6 @@
             }
             $conn->close();
             ?>
-
 
 
             </div>
@@ -167,7 +260,9 @@
        </section>
     </footer>
 
-    <script src="js/catalog.js"></script>
     <script src="js/card.js"></script>
+    <script src="js/catalog.js"></script>
+
 </body>
 </html>
+

@@ -204,3 +204,249 @@
 ?>
 
 
+<!-- добавление в корзину -->
+$sql = "SELECT product.*, photo.path, GROUP_CONCAT(sizes.id_size) AS all_size_ids, GROUP_CONCAT(sizes.rus_size) AS all_sizes
+        FROM product
+        INNER JOIN photo ON product.id_photo = photo.id_photo
+        INNER JOIN available_sizes ON product.id_product = available_sizes.id_product
+        INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+        WHERE product.id_product = $product_id
+        GROUP BY product.id_product"; 
+
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $sizeIds = explode(",", $row['all_size_ids']); // Получаем массив идентификаторов размеров
+        $sizes = explode(",", $row['all_sizes']); // Получаем массив размеров
+
+        // Остальная часть вывода товара
+        // Ваш код для вывода изображения, названия, цены и т.д.
+
+        echo '<div class="available-sizes">';
+        
+        // Цикл для добавления размеров с их идентификаторами в атрибут data-id
+        for ($i = 0; $i < count($sizeIds); $i++) {
+            $sizeId = $sizeIds[$i];
+            $size = $sizes[$i];
+
+            // Добавление элемента с размером и его идентификатором в атрибуте data-id
+            echo '<span class="size-box" data-id="' . $sizeId . '" style="display:none;"></span>';
+        }
+
+        echo '</div>';
+
+        // Ваш код для кнопки "Добавить в корзину"
+        echo '<button class="button-add-to-cart">Добавить в корзину</button>';
+        echo '</div>';
+    }
+} else {
+    echo "Нет информации о товаре.";
+}
+
+
+<div class="product-info">
+    <!-- ... Ваш существующий HTML код ... -->
+    <form method="post" action="обработчик_добавления_в_корзину.php">
+        <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+        <select name="selected_size">
+            <!-- Здесь можно вставить какие-то варианты выбора размера, если это необходимо -->
+        </select>
+        <button type="submit" name="add_to_cart">Добавить в корзину</button>
+    </form>
+</div>
+
+echo '<div class="available-sizes">';
+echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
+
+$sizes = explode(",", $row['all_sizes']);
+foreach ($sizes as $size) {
+    echo '<input type="radio" id="' . trim($size) . '" name="selected_size" value="' . trim($size) . '" style="display: none;">';
+    echo '<label for="' . trim($size) . '" class="size-box" style="cursor: pointer;">' . trim($size) . '</label>';
+}
+
+echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
+echo '</form>';
+echo '</div>';
+
+
+// ... (ваш код до проверки выбранного размера)
+
+// Выполняем проверку, выбран ли размер
+if (empty($selected_size)) {
+    $error_message = 'Выберите размер перед добавлением в корзину';
+
+    
+    <?php
+// Проверяем, был ли отправлен POST запрос для добавления в корзину
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+
+    // Подключение к базе данных
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "eden";
+
+    // Создание соединения
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Проверка соединения
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Получаем данные из POST запроса
+    $product_id = $_GET['product_id']; // Исправил: теперь берем из $_GET
+    $selected_size = isset($_POST['selected_size']) ? $_POST['selected_size'] : null;
+
+    // Проверяем, выбран ли размер
+    if (empty($selected_size)) {
+        echo 'Выберите размер перед добавлением в корзину';
+    } else {
+        // Выбранный размер не пустой - обрабатываем добавление в корзину
+
+        // 1. Обновляем quantity в таблице cart
+        $updateCartSql = "UPDATE cart SET quantity = quantity + 1 WHERE id_product = ? AND id_size = ?";
+        $stmtUpdateCart = $conn->prepare($updateCartSql);
+        $stmtUpdateCart->bind_param("ii", $product_id, $selected_size);
+
+        // 2. Обновляем count в таблице available_sizes
+        $updateAvailableSizesSql = "UPDATE available_sizes SET count = count - 1 WHERE id_product = ? AND id_size = ? AND count > 0";
+        $stmtUpdateAvailableSizes = $conn->prepare($updateAvailableSizesSql);
+        $stmtUpdateAvailableSizes->bind_param("ii", $product_id, $selected_size);
+
+        // Запускаем оба запроса в транзакции
+        $conn->begin_transaction();
+
+        // Выполняем обновление в таблице cart
+        if ($stmtUpdateCart->execute()) {
+            // Выполняем обновление в таблице available_sizes
+            if ($stmtUpdateAvailableSizes->execute()) {
+                // Коммитим изменения в обеих таблицах
+                $conn->commit();
+                echo 'Товар успешно добавлен в корзину!';
+            } else {
+                // Ошибка в обновлении таблицы available_sizes, откатываем транзакцию
+                $conn->rollback();
+                echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+            }
+        } else {
+            // Ошибка в обновлении таблицы cart, откатываем транзакцию
+            $conn->rollback();
+            echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+        }
+
+        // Закрываем соединение
+        $stmtUpdateCart->close();
+        $stmtUpdateAvailableSizes->close();
+    }
+
+    // Закрываем соединение с базой данных
+    $conn->close();
+}
+?>
+
+
+
+<!-- хз какой вариант -->
+
+<?php
+// Проверяем, был ли отправлен POST запрос для добавления в корзину
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+
+    // Подключение к базе данных
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "eden";
+
+    // Создание соединения
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Проверка соединения
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Получаем данные из POST запроса
+    $product_id = $_GET['product_id']; // Исправил: теперь берем из $_GET
+    $selected_size = isset($_POST['selected_size']) ? $_POST['selected_size'] : null;
+
+    // Проверяем, выбран ли размер
+    if (empty($selected_size)) {
+        echo 'Выберите размер перед добавлением в корзину';
+    } else {
+        // Выбранный размер не пустой - обрабатываем добавление в корзину
+
+        // 1. Проверяем, есть ли уже товар в корзине
+        $checkCartItemSql = "SELECT * FROM cart WHERE id_product = ? AND id_size = ?";
+        $stmtCheckCartItem = $conn->prepare($checkCartItemSql);
+        $stmtCheckCartItem->bind_param("ii", $product_id, $selected_size);
+        $stmtCheckCartItem->execute();
+        $result = $stmtCheckCartItem->get_result();
+
+        if ($result->num_rows > 0) {
+            // Товар уже есть в корзине, обновляем quantity
+            $updateCartSql = "UPDATE cart SET quantity = quantity + 1 WHERE id_product = ? AND id_size = ?";
+            $stmtUpdateCart = $conn->prepare($updateCartSql);
+            $stmtUpdateCart->bind_param("ii", $product_id, $selected_size);
+        } else {
+            // Товара еще нет в корзине, добавляем новую запись
+            $addToCartSql = "INSERT INTO cart (id_product, id_size, quantity) VALUES (?, ?, 1)";
+            $stmtAddToCart = $conn->prepare($addToCartSql);
+            $stmtAddToCart->bind_param("ii", $product_id, $selected_size);
+        }
+
+        // 2. Обновляем count в таблице available_sizes
+        $updateAvailableSizesSql = "UPDATE available_sizes SET count = count - 1 WHERE id_product = ? AND id_size = ? AND count > 0";
+        $stmtUpdateAvailableSizes = $conn->prepare($updateAvailableSizesSql);
+        $stmtUpdateAvailableSizes->bind_param("ii", $product_id, $selected_size);
+
+        // Запускаем оба запроса в транзакции
+        $conn->begin_transaction();
+
+        // Выполняем соответствующий запрос в таблице cart
+        if (isset($stmtUpdateCart)) {
+            if ($stmtUpdateCart->execute()) {
+                // Выполняем обновление в таблице available_sizes
+                if ($stmtUpdateAvailableSizes->execute()) {
+                    $conn->commit();
+                    echo 'Товар успешно добавлен в корзину!';
+                } else {
+                    $conn->rollback();
+                    echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+                }
+            } else {
+                $conn->rollback();
+                echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+            }
+        } else {
+            if ($stmtAddToCart->execute()) {
+                // Выполняем обновление в таблице available_sizes
+                if ($stmtUpdateAvailableSizes->execute()) {
+                    $conn->commit();
+                    echo 'Товар успешно добавлен в корзину!';
+                } else {
+                    $conn->rollback();
+                    echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+                }
+            } else {
+                $conn->rollback();
+                echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+            }
+        }
+
+        // Закрываем соединение
+        if (isset($stmtUpdateCart)) {
+            $stmtUpdateCart->close();
+        } elseif (isset($stmtAddToCart)) {
+            $stmtAddToCart->close();
+        }
+        $stmtCheckCartItem->close();
+        $stmtUpdateAvailableSizes->close();
+    }
+
+    // Закрываем соединение с базой данных
+    $conn->close();
+}
+?>
