@@ -181,40 +181,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                     echo '<h2 class="product-name">' . $row['name'] . '</h2>';
                     echo '<p class="product-price">' . $row['product_price'] . ' ₽</p>';
 
-                   
-
-                  /*   echo '<div class="available-sizes">';
-
-                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">'; */
-
-            
-
-                 /*    $sizes = explode(",", $row['all_sizes']);
-                    foreach ($sizes as $size) {
-                        echo '<input type="radio" id="' . trim($size) . '" name="selected_size" value="' . trim($size) . '" style="display: none;">';
-                        echo '<label for="' . trim($size) . '" class="size-box" style="cursor: pointer;">' . trim($size) . '</label>';
-                    } */
-
-                   /*  echo '<div class="available-sizes">';
-                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
-
-                    $sizes = explode(",", $row['all_size_ids']); // Получаем массив id_size
-                    $russian_sizes = explode(",", $row['all_sizes']); // Получаем массив rus_size
-
-                    for ($i = 0; $i < count($sizes); $i++) {
-                        echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($russian_sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
-                        echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
-                    }
-
-                    echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
-                    echo '</form>';
-                    echo '</div>'; */
-
-                    
-                  /*   echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
-                    echo '</form>';
-                    echo '</div>'; */
-
                     echo '<div class="available-sizes">';
                     echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
 
