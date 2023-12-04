@@ -1,6 +1,7 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId']) && isset($_POST['sizeId'])) {
     $productId = $_POST['productId'];
+    $sizeId = $_POST['sizeId'];
 
     $servername = "localhost";
     $username = "root";
@@ -13,38 +14,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId'])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Извлечение текущего значения quantity
-    $getQuantitySql = "SELECT quantity FROM cart WHERE id_product = ?";
+    // Получение текущего количества товара в корзине
+    $getQuantitySql = "SELECT quantity FROM cart WHERE id_product = ? AND id_size = ?";
     $stmtGetQuantity = $conn->prepare($getQuantitySql);
-    $stmtGetQuantity->bind_param("i", $productId);
+    $stmtGetQuantity->bind_param("ii", $productId, $sizeId);
     $stmtGetQuantity->execute();
-    $stmtGetQuantity->bind_result($quantity);
-    $stmtGetQuantity->fetch();
-    $stmtGetQuantity->close();
+    $stmtGetQuantity->store_result();
+    
+    if ($stmtGetQuantity->num_rows > 0) {
+        $stmtGetQuantity->bind_result($quantity);
+        $stmtGetQuantity->fetch();
 
-    // Обновление или удаление товара
-    if ($quantity > 1) {
-        $updateSql = "UPDATE cart SET quantity = quantity - 1 WHERE id_product = ?";
-        $stmtUpdate = $conn->prepare($updateSql);
-        $stmtUpdate->bind_param("i", $productId);
-        if ($stmtUpdate->execute()) {
-            echo 'success';
+        if ($quantity > 1) {
+            // Уменьшение количества на 1
+            $updateSql = "UPDATE cart SET quantity = quantity - 1 WHERE id_product = ? AND id_size = ?";
+            $stmtUpdate = $conn->prepare($updateSql);
+            $stmtUpdate->bind_param("ii", $productId, $sizeId);
+            if ($stmtUpdate->execute()) {
+                echo 'success';
+            } else {
+                echo 'error';
+            }
         } else {
-            echo 'error';
+            // Удаление из корзины
+            $deleteSql = "DELETE FROM cart WHERE id_product = ? AND id_size = ?";
+            $stmtDelete = $conn->prepare($deleteSql);
+            $stmtDelete->bind_param("ii", $productId, $sizeId);
+            if ($stmtDelete->execute()) {
+                echo 'success';
+            } else {
+                echo 'error';
+            }
         }
-        $stmtUpdate->close();
     } else {
-        $deleteSql = "DELETE FROM cart WHERE id_product = ?";
-        $stmtDelete = $conn->prepare($deleteSql);
-        $stmtDelete->bind_param("i", $productId);
-        if ($stmtDelete->execute()) {
-            echo 'success';
-        } else {
-            echo 'error';
-        }
-        $stmtDelete->close();
+        echo 'error - product not found in cart';
     }
 
+    $stmtGetQuantity->close();
+    if (isset($stmtUpdate)) {
+        $stmtUpdate->close();
+    }
+    if (isset($stmtDelete)) {
+        $stmtDelete->close();
+    }
     $conn->close();
 }
 ?>

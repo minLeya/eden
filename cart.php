@@ -92,32 +92,6 @@
     <h1 class="title">Корзина</h1>
        <div class="list-of-products">
             <ul>
-            <!-- <li class="product">
-                
-                <img src="img/top.jpg" alt="product-image">
-                <div class="product-info">
-                    <div class="product-details">
-                        <div class="product-detail-item">Название</div>
-                        <div class="product-detail-item">Цена: 50 Р</div>
-                        <div class="product-detail-item">Размер: S</div>
-                        <div class="product-detail-item">Количество: 2</div>
-                    </div>
-                    <button>Удалить</button>
-                </div>
-            </li>
-            <li class="product">
-            <img src="img/top.jpg" alt="product-image">
-                <div class="product-info">
-                    <div class="product-details">
-                        <div class="product-detail-item">Название</div>
-                        <div class="product-detail-item">Цена: 50 Р</div>
-                        <div class="product-detail-item">Размер: S</div>
-                        <div class="product-detail-item">Количество: 2</div>
-                    </div>
-                    <button>Удалить</button>
-                </div>
-            </li> -->
-
             <?php
                 $servername = "localhost";
                 $username = "root";
@@ -129,18 +103,16 @@
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
-                        $sql = "SELECT DISTINCT cart.id_cart, product.id_product, product.name, product.product_price, sizes.rus_size, sizes.international_size, cart.quantity, photo.path 
-                        FROM cart
-                        JOIN product ON cart.id_product = product.id_product
-                        JOIN available_sizes ON cart.id_size = available_sizes.id_sizes
-                        JOIN sizes ON available_sizes.id_sizes = sizes.id_size
-                        JOIN photo ON product.id_photo = photo.id_photo";
-                
-                
+                $sql = "SELECT DISTINCT cart.id_cart, product.id_product, product.name, product.product_price, sizes.id_size, sizes.rus_size, sizes.international_size, cart.quantity, photo.path 
+                FROM cart
+                JOIN product ON cart.id_product = product.id_product
+                JOIN available_sizes ON cart.id_size = available_sizes.id_sizes
+                JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+                JOIN photo ON product.id_photo = photo.id_photo";
+        
                 $result = $conn->query($sql);
-
+                
                 if ($result->num_rows > 0) {
-                    // Вывод информации о товарах в корзине
                     while ($row = $result->fetch_assoc()) {
                         echo '<li class="product">';
                         echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
@@ -151,11 +123,12 @@
                         echo '<div class="product-detail-item">Размер: ' . $row['rus_size'] . '(' . $row['international_size'] . ')' . '</div>';
                         echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>';
                         echo '</div>';
-                        echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '">Удалить</button>'; /* передается правильный айди */
+                        echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">Удалить</button>';
                         echo '</div>';
                         echo '</li>';
                     } 
                 }
+        
                 else {
                     echo '<div class="no-products-in-cart">В корзине нет товаров!</div>';
                 }
@@ -199,26 +172,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.delete-button').on('click', function() {
-                var productId = $(this).data('product-id');
+        $('.delete-button').on('click', function() {
+        var productId = $(this).data('product-id');
+        var sizeId = $(this).data('size-id');
 
-                $.ajax({
-                    type: 'POST',
-                    url: 'removeFromCart.php',
-                    data: { productId: productId },
-                    success: function(response) {
-                        if (response === 'success') {
-                            location.reload();
-                        } else {
-                            alert('Ошибка при удалении товара из корзины');
-                        }
-                    },
-                    error: function() {
-                        alert('Произошла ошибка при отправке запроса');
-                    }
+        $.ajax({
+            type: 'POST',
+            url: 'removeFromCart.php',
+            data: { productId: productId, sizeId: sizeId },
+            success: function(response) {
+                if (response === 'success') {
+                    location.reload();
+                } else {
+                    alert('Ошибка при удалении товара из корзины');
+                }
+            },
+            error: function() {
+                alert('Произошла ошибка при отправке запроса');
+            }
                 });
             });
         });
+
+
     </script>
 
 </body>

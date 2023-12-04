@@ -495,3 +495,36 @@ if ($result->num_rows > 0) {
 }
 $conn->close();
 ?>
+
+
+<!-- the best -->
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId']) && isset($_POST['sizeId'])) {
+    $productId = $_POST['productId'];
+    $sizeId = $_POST['sizeId'];
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "eden";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Обработка удаления товара по переданным id_product и id_size
+    $deleteSql = "DELETE FROM cart WHERE id_product = ? AND id_size = ?";
+    $stmtDelete = $conn->prepare($deleteSql);
+    $stmtDelete->bind_param("ii", $productId, $sizeId);
+
+    if ($stmtDelete->execute()) {
+        echo 'success';
+    } else {
+        echo 'error';
+    }
+
+    $stmtDelete->close();
+    $conn->close();
+}
