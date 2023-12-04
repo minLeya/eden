@@ -137,10 +137,44 @@
             </ul>
         </div> 
 
-        <div class="summary">
-            <p class="quantity-and-total-price">Количество <span>Общая стоимость товаров</span></p>
-            <p class="quantity-and-total-price-value">2 ед. <span>1199888888 руб.</span></p>
-        </div>
+        <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "eden";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // SQL-запрос для получения общего количества и стоимости товаров в корзине
+        $summarySql = "SELECT SUM(cart.quantity) AS totalQuantity, SUM(product.product_price * cart.quantity) AS totalPrice
+                    FROM cart
+                    JOIN product ON cart.id_product = product.id_product";
+
+        $resultSummary = $conn->query($summarySql);
+
+        if ($resultSummary->num_rows > 0) {
+            $summary = $resultSummary->fetch_assoc();
+            $totalQuantity = $summary['totalQuantity'];
+            $totalPrice = $summary['totalPrice'];
+
+            echo '<div class="summary">';
+            echo '<p class="quantity-and-total-price">Количество <span>Общая стоимость товаров</span></p>';
+            echo '<p class="quantity-and-total-price-value">' . $totalQuantity . ' ед. <span>' . $totalPrice . ' ₽</span></p>';
+            echo '</div>';
+        } else {
+            echo '<div class="summary">';
+            echo '<p class="quantity-and-total-price">Количество <span>Общая стоимость товаров</span></p>';
+            echo '<p class="quantity-and-total-price-value">0 ед. <span>0 ₽</span></p>';
+            echo '</div>';
+        }
+
+        $conn->close();
+        ?>
+
 
         <div class="order">
             <button class="order-button">Оформить заказ</button>
