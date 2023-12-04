@@ -100,3 +100,18 @@ ul {
     margin-left: auto; /* Помещаем числа вправо */
 }
 
+.order {
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+}
+
+.order-button {
+    background-color: black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 19px;
+    height: 35px;
+    width: 180px;
+}

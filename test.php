@@ -450,3 +450,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     $conn->close();
 }
 ?>
+
+<!-- 03.12.2023 -->
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "eden";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT DISTINCT cart.id_cart, product.name, product.product_price, sizes.rus_size, sizes.international_size, cart.quantity, photo.path 
+        FROM cart
+        JOIN product ON cart.id_product = product.id_product
+        JOIN available_sizes ON cart.id_size = available_sizes.id_sizes
+        JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+        JOIN photo ON product.id_photo = photo.id_photo";
+
+
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Вывод информации о товарах в корзине
+    while ($row = $result->fetch_assoc()) {
+        echo '<li class="product">';
+        echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
+        echo '<div class="product-info">';
+        echo '<div class="product-details">';
+        echo '<div class="product-detail-item">' . $row['name'] . '</div>';
+        echo '<div class="product-detail-item">Цена: ' . $row['product_price'] . ' ₽</div>';
+        echo '<div class="product-detail-item">Размер: ' . $row['rus_size'] . '(' . $row['international_size'] . ')' . '</div>';
+        echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>';
+        echo '</div>';
+        echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '">Удалить</button>';
+        echo '</div>';
+        echo '</li>';
+    } 
+} else {
+    echo '<div class="no-products-in-cart">В корзине нет товаров!</div>';
+}
+$conn->close();
+?>

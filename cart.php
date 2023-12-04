@@ -129,7 +129,7 @@
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
-                        $sql = "SELECT DISTINCT cart.id_cart, product.name, product.product_price, sizes.rus_size, sizes.international_size, cart.quantity, photo.path 
+                        $sql = "SELECT DISTINCT cart.id_cart, product.id_product, product.name, product.product_price, sizes.rus_size, sizes.international_size, cart.quantity, photo.path 
                         FROM cart
                         JOIN product ON cart.id_product = product.id_product
                         JOIN available_sizes ON cart.id_size = available_sizes.id_sizes
@@ -151,10 +151,10 @@
                         echo '<div class="product-detail-item">Размер: ' . $row['rus_size'] . '(' . $row['international_size'] . ')' . '</div>';
                         echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>';
                         echo '</div>';
-                        echo '<button class="delete-button">Удалить</button>';
+                        echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '">Удалить</button>'; /* передается правильный айди */
                         echo '</div>';
                         echo '</li>';
-                    }
+                    } 
                 }
                 else {
                     echo '<div class="no-products-in-cart">В корзине нет товаров!</div>';
@@ -169,6 +169,9 @@
             <p class="quantity-and-total-price-value">2 ед. <span>1199888888 руб.</span></p>
         </div>
 
+        <div class="order">
+            <button class="order-button">Оформить заказ</button>
+        </div>
 
     </main>
    
@@ -193,5 +196,30 @@
     </footer>
 
     <script src="js/catalog.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function() {
+                var productId = $(this).data('product-id');
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'removeFromCart.php',
+                    data: { productId: productId },
+                    success: function(response) {
+                        if (response === 'success') {
+                            location.reload();
+                        } else {
+                            alert('Ошибка при удалении товара из корзины');
+                        }
+                    },
+                    error: function() {
+                        alert('Произошла ошибка при отправке запроса');
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
