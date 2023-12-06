@@ -100,11 +100,11 @@ ul {
     margin-left: auto; /* Помещаем числа вправо */
 }
 
-.order {
+/* .order {
     display: flex;
     justify-content: center;
     margin: 40px;
-}
+}*/
 
 .order-button {
     background-color: black;
@@ -114,4 +114,52 @@ ul {
     border-radius: 19px;
     height: 35px;
     width: 180px;
-}
+    margin: 30px;
+} 
+
+.order-form {
+    width: 300px;
+    margin: 0 auto;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .input-group input {
+    width: calc(50% - 5px);
+    padding: 8px;
+    border: 10px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .phone-input,
+  .address-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .placeholder-text {
+    position: absolute;
+    pointer-events: none;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: top 0.3s ease, font-size 0.3s ease;
+  }
+  
+  .input-group input:focus + .placeholder-text,
+  .phone-input:focus + .placeholder-text,
+  .address-input:focus + .placeholder-text {
+    top: -10px;
+    font-size: 12px;
+  }
+  
+  

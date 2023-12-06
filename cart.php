@@ -168,17 +168,44 @@
         } else {
             echo '<div class="summary">';
             echo '<p class="quantity-and-total-price">Количество <span>Общая стоимость товаров</span></p>';
-            echo '<p class="quantity-and-total-price-value">0 ед. <span>0 ₽</span></p>';
+            echo '<p class="quantity-and-total-price-value">0 ед. <span>0 руб.</span></p>';
             echo '</div>';
         }
 
         $conn->close();
         ?>
 
+        <!-- Форма для оформления заказа -->
+        <div class="order-form">
+            <form action="process_order.php" method="POST">
+                <!-- <label for="last_name">Фамилия:</label> -->
+                <input type="text" id="last_name" name="last_name" required><br><br>
 
-        <div class="order">
-            <button class="order-button">Оформить заказ</button>
+                <label for="first_name">Имя:</label>
+                <input type="text" id="first_name" name="first_name" required><br><br>
+<!-- 
+                <label for="patronymic">Отчество:</label>
+                <input type="text" id="patronymic" name="patronymic"><br><br> -->
+
+                <label for="number">Номер телефона:</label>
+                <input type="text" id="number" name="number" required><br><br>
+
+                <label for="address">Выберите адрес:</label>
+                <select id="address" name="address" required>
+                    <!-- Здесь должны быть варианты адресов из базы данных -->
+                    <option value="1">Адрес 1</option>
+                    <option value="2">Адрес 2</option>
+                    <!-- ... -->
+                </select><br><br>
+
+                <button type="submit" class="order-button">Оформить заказ</button>
+            </form>
         </div>
+
+
+       <!--  <div class="order">
+            <button class="order-button">Оформить заказ</button>
+        </div> -->
 
     </main>
    
