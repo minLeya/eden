@@ -115,10 +115,18 @@
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo '<li class="product">';
-                        echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">';
+
+                        echo '<a href="card.php?id_product=' . $row['id_product'] . '" class="product-link">';
+                        echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">'; 
+                        echo '</a>';
+
                         echo '<div class="product-info">';
                         echo '<div class="product-details">';
+
+                        echo '<a href="card.php?id_product=' . $row['id_product'] . '" class="product-link">';
                         echo '<div class="product-detail-item">' . $row['name'] . '</div>';
+                        echo '</a>';
+
                         echo '<div class="product-detail-item">Цена: ' . $row['product_price'] . ' ₽</div>';
                         echo '<div class="product-detail-item">Размер: ' . $row['rus_size'] . '(' . $row['international_size'] . ')' . '</div>';
                         echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>';
@@ -177,35 +185,45 @@
 
         <!-- Форма для оформления заказа -->
         <div class="order-form">
-            <form action="process_order.php" method="POST">
-                <!-- <label for="last_name">Фамилия:</label> -->
-                <input type="text" id="last_name" name="last_name" required><br><br>
+            <form action="makeOrder.php" method="POST">
+                <input type="text" id="last_name" name="last_name"  placeholder="Фамилия*" required><br><br>
 
-                <label for="first_name">Имя:</label>
-                <input type="text" id="first_name" name="first_name" required><br><br>
-<!-- 
-                <label for="patronymic">Отчество:</label>
-                <input type="text" id="patronymic" name="patronymic"><br><br> -->
+                <input type="text" id="first_name" name="first_name" placeholder="Имя*" required><br><br>
 
-                <label for="number">Номер телефона:</label>
-                <input type="text" id="number" name="number" required><br><br>
+                <input type="text" id="number" name="number" placeholder="+79123456789*" required maxlength="12"><br><br>
 
-                <label for="address">Выберите адрес:</label>
+                <div class="address-box">
                 <select id="address" name="address" required>
-                    <!-- Здесь должны быть варианты адресов из базы данных -->
-                    <option value="1">Адрес 1</option>
-                    <option value="2">Адрес 2</option>
-                    <!-- ... -->
-                </select><br><br>
+                    <?php
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "eden";
+
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
+                    $sql = "SELECT * FROM address";
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<option value="' . $row['id_address'] . '">' . $row['address'] . '</option>';
+                        }
+                    }
+                    $conn->close();
+                    ?>
+                </select><br>
+
+                </div>
+                
 
                 <button type="submit" class="order-button">Оформить заказ</button>
             </form>
         </div>
-
-
-       <!--  <div class="order">
-            <button class="order-button">Оформить заказ</button>
-        </div> -->
 
     </main>
    
@@ -254,8 +272,6 @@
                 });
             });
         });
-
-
     </script>
 
 </body>

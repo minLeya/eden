@@ -51,8 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -191,8 +189,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                         echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
                         echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
                     }
-
+                    echo '<div class="button-class">';
                     echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
+                    echo '</div>';
+
                     echo '</form>';
                     echo '</div>';
                 }

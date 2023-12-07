@@ -61,8 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
             if ($stmtUpdateCart->execute()) {
                 // Выполняем обновление в таблице available_sizes
                 if ($stmtUpdateAvailableSizes->execute()) {
-                    $conn->commit();
-                    echo 'Товар успешно добавлен в корзину!';
+                    echo 'Товар успешно добавлен в корзину!'; // Это место, где можно вставить JavaScript
+                    echo '<script>';
+                    echo 'alert("Товар успешно добавлен в корзину!");';
+                    echo '</script>';
                 } else {
                     $conn->rollback();
                     echo 'Ошибка при добавлении в корзину: ' . $conn->error;

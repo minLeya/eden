@@ -23,6 +23,7 @@ ul {
     margin-bottom: 20px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
+    font-size: 110%;;
 }
 
 .product img {
@@ -50,7 +51,10 @@ ul {
 /*     text-transform: uppercase;
  */}
 
-
+.product-link {
+    text-decoration: none;
+    color:black;
+}
 .product-info button:hover {
     background-color: rgba(142, 6, 6, 0.812);
 }
@@ -69,6 +73,7 @@ ul {
     justify-content: center;
     align-items: center;
     line-height: 35px; /* Устанавливаем высоту кнопки равной высоте текста */
+    font-size: 85%;
 }
 
 .title{
@@ -79,6 +84,7 @@ ul {
     font-weight: 520;
 }
 
+/* итого */
 .summary {
     display: flex;
     justify-content: space-between;
@@ -100,11 +106,7 @@ ul {
     margin-left: auto; /* Помещаем числа вправо */
 }
 
-/* .order {
-    display: flex;
-    justify-content: center;
-    margin: 40px;
-}*/
+/* кнопки для заказа */
 
 .order-button {
     background-color: black;
@@ -114,52 +116,36 @@ ul {
     border-radius: 19px;
     height: 35px;
     width: 180px;
-    margin: 30px;
+    margin: 30px auto;
+    display: block;
 } 
 
+  /* Стили для формы оформления заказа */
 .order-form {
     width: 300px;
     margin: 0 auto;
-  }
+    text-align: center;
+    font-size: 93%;
+}
   
-  .input-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  input[type="text"],
+  select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
     margin-bottom: 10px;
-  }
+}
   
-  .input-group input {
-    width: calc(50% - 5px);
-    padding: 8px;
-    border: 10px solid #ccc;
-    border-radius: 5px;
-  }
+  input[type="text"]::placeholder,
+  select {
+    font-style:normal;
+    color: #999;
+}
+ 
+#address {
+    color: black; /* Цвет текста для выбранных элементов */
+}
   
-  .phone-input,
-  .address-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .placeholder-text {
-    position: absolute;
-    pointer-events: none;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: top 0.3s ease, font-size 0.3s ease;
-  }
-  
-  .input-group input:focus + .placeholder-text,
-  .phone-input:focus + .placeholder-text,
-  .address-input:focus + .placeholder-text {
-    top: -10px;
-    font-size: 12px;
-  }
-  
+
   
