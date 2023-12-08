@@ -72,15 +72,20 @@ if ($resultSummary->num_rows > 0) {
                             VALUES ('$productId', '$order_id', '$sizeId', '$count', '$sum')";
     if ($conn->query($insertOrderDetailsSql) !== TRUE) {
         echo "Ошибка вставки данных деталей заказа: " . $conn->error;
-        exit();
-    }
-    }
+        exit(); }
+
+       /*  $updateAvailableSizesSql = "UPDATE available_sizes SET count = count - '$count' WHERE id_product = '$productId' AND id_sizes = '$sizeId'";
+        if ($conn->query($updateAvailableSizesSql) !== TRUE) {
+            echo "Ошибка обновления данных в таблице available_sizes: " . $conn->error;
+            exit();} */
+            }
+        } else {
+            echo "Нет товаров в корзине"; }
     } else {
-    echo "Нет товаров в корзине";
+        echo "Нет данных о товарах";
     }
-    } else {
-    echo "Нет данных о товарах";
-    }
+
+    
 
     $conn->close();
 

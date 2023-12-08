@@ -53,17 +53,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         $stmtUpdateAvailableSizes = $conn->prepare($updateAvailableSizesSql);
         $stmtUpdateAvailableSizes->bind_param("ii", $product_id, $selected_size);
 
-        // Запускаем оба запроса в транзакции
+      /*   // Запускаем оба запроса в транзакции
         $conn->begin_transaction();
+
+        if (isset($stmtUpdateCart)) {
+            if ($stmtUpdateCart->execute()) {
+                $conn->commit();
+                echo 'Товар успешно добавлен в корзину!';
+                echo '<script>alert("Товар успешно добавлен в корзину!");</script>';
+            } else {
+                $conn->rollback();
+                echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+            }
+        } else {
+            if ($stmtAddToCart->execute()) {
+                $conn->commit();
+                echo 'Товар успешно добавлен в корзину!';
+                echo '<script>alert("Товар успешно добавлен в корзину!");</script>';
+            } else {
+                $conn->rollback();
+                echo 'Ошибка при добавлении в корзину: ' . $conn->error;
+            }
+        }
+
+        // Закрываем соединение
+        if (isset($stmtUpdateCart)) {
+            $stmtUpdateCart->close();
+        } elseif (isset($stmtAddToCart)) {
+            $stmtAddToCart->close();
+        }
+        $stmtCheckCartItem->close();
+    }
+
+    // Закрываем соединение с базой данных
+    $conn->close(); */
+
+
 
         // Выполняем соответствующий запрос в таблице cart
         if (isset($stmtUpdateCart)) {
             if ($stmtUpdateCart->execute()) {
                 // Выполняем обновление в таблице available_sizes
                 if ($stmtUpdateAvailableSizes->execute()) {
-                    echo 'Товар успешно добавлен в корзину!'; // Это место, где можно вставить JavaScript
                     echo '<script>';
                     echo 'alert("Товар успешно добавлен в корзину!");';
+/*                     echo 'window.location.href = window.location.href;'; // Обновление текущей страницы
+ */
                     echo '</script>';
                 } else {
                     $conn->rollback();
@@ -78,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                 // Выполняем обновление в таблице available_sizes
                 if ($stmtUpdateAvailableSizes->execute()) {
                     $conn->commit();
-                    echo 'Товар успешно добавлен в корзину!';
                 } else {
                     $conn->rollback();
                     echo 'Ошибка при добавлении в корзину: ' . $conn->error;

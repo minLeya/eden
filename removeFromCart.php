@@ -41,7 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId']) && isset
             $stmtDelete = $conn->prepare($deleteSql);
             $stmtDelete->bind_param("ii", $productId, $sizeId);
             if ($stmtDelete->execute()) {
-                echo 'success';
+                // Здесь вставляем код для увеличения количества в таблице available_sizes
+                $updateAvailableSizesSql = "UPDATE available_sizes SET count = count + 1 WHERE id_product = ? AND id_sizes = ?";
+                $stmtUpdateAvailableSizes = $conn->prepare($updateAvailableSizesSql);
+                $stmtUpdateAvailableSizes->bind_param("ii", $productId, $sizeId);
+            
+                if ($stmtUpdateAvailableSizes->execute()) {
+                    echo 'success';
+                } else {
+                    echo 'error';
+                }
             } else {
                 echo 'error';
             }

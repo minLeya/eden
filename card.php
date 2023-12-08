@@ -35,12 +35,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         // Привязываем параметры к запросу
         $stmt->bind_param("ii", $product_id, $selected_size);
 
+
         // Выполняем запрос
-        if ($stmt->execute()) {
+        /* if ($stmt->execute()) {
             echo 'Товар успешно добавлен в корзину!';
         } else {
             echo 'Ошибка при добавлении в корзину: ' . $conn->error;
-        }
+        } */
 
         // Закрываем соединение
         $stmt->close();
@@ -158,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            $product_id = $_GET['id_product'];
+           /*  $product_id = $_GET['id_product'];
 
                     $sql = "SELECT product.*, photo.path, GROUP_CONCAT(sizes.id_size) AS all_size_ids, GROUP_CONCAT(sizes.rus_size) AS all_sizes
                     FROM product
@@ -200,8 +201,110 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                 echo "Нет информации о товаре.";
             }
             $conn->close();
-            ?>
+            ?> */
+            /* $product_id = $_GET['id_product'];
 
+            $sql = "SELECT product.*, photo.path, GROUP_CONCAT(available_sizes.id_sizes) AS all_size_ids, GROUP_CONCAT(sizes.rus_size) AS all_sizes
+                    FROM product
+                    INNER JOIN photo ON product.id_photo = photo.id_photo
+                    INNER JOIN (
+                        SELECT available_sizes.id_product, available_sizes.id_sizes
+                        FROM available_sizes
+                        INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+                        WHERE available_sizes.count > 0
+                    ) AS available_sizes ON product.id_product = available_sizes.id_product
+                    INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+                    WHERE product.id_product = $product_id
+                    GROUP BY product.id_product"; 
+            
+            $result = $conn->query($sql);
+            
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="product-image">';
+                    echo '<img src="' . $row['path'] . '" alt="product-name">';
+                    echo '</div>';
+                    echo '<div class="product-info">';
+                    echo '<h2 class="product-name">' . $row['name'] . '</h2>';
+                    echo '<p class="product-price">' . $row['product_price'] . ' ₽</p>';
+            
+                    echo '<div class="available-sizes">';
+                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
+            
+                    $sizes = explode(",", $row['all_size_ids']); // Получаем массив id_size
+                    $russian_sizes = explode(",", $row['all_sizes']); // Получаем массив rus_size
+            
+                    for ($i = 0; $i < count($sizes); $i++) {
+                        echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
+                        echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
+                    }
+            
+                    echo '<div class="button-class">';
+                    echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
+                    echo '</div>';
+            
+                    echo '</form>';
+                    echo '</div>';
+                }
+            } else {
+                echo "Нет информации о товаре.";
+            } */
+
+            $product_id = $_GET['id_product'];
+
+            $sql = "SELECT product.*, photo.path, GROUP_CONCAT(available_sizes.id_sizes) AS all_size_ids, GROUP_CONCAT(sizes.rus_size) AS all_sizes
+                    FROM product
+                    INNER JOIN photo ON product.id_photo = photo.id_photo
+                    LEFT JOIN (
+                        SELECT available_sizes.id_product, available_sizes.id_sizes
+                        FROM available_sizes
+                        INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+                        WHERE available_sizes.count > 0
+                    ) AS available_sizes ON product.id_product = available_sizes.id_product
+                    LEFT JOIN sizes ON available_sizes.id_sizes = sizes.id_size
+                    WHERE product.id_product = $product_id
+                    GROUP BY product.id_product"; 
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+
+                echo '<div class="product-image">';
+                echo '<img src="' . $row['path'] . '" alt="product-name">';
+                echo '</div>';
+                echo '<div class="product-info">';
+                echo '<h2 class="product-name">' . $row['name'] . '</h2>';
+                echo '<p class="product-price">' . $row['product_price'] . ' ₽</p>';
+
+                $sizes = !empty($row['all_size_ids']) ? explode(",", $row['all_size_ids']) : [];
+                $russian_sizes = !empty($row['all_sizes']) ? explode(",", $row['all_sizes']) : [];
+
+                if (count($sizes) > 0 && count($russian_sizes) > 0) {
+                    echo '<div class="available-sizes">';
+                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
+
+                    for ($i = 0; $i < count($sizes); $i++) {
+                        echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
+                        echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
+                    }
+
+                    echo '<div class="button-class">';
+                    echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
+                    echo '</div>';
+
+                    echo '</form>';
+                    echo '</div>';
+                } else {
+                    echo "Нет размеров.";
+                }
+            } else {
+                echo "Нет информации о товаре.";
+            }
+
+            $conn->close();
+            ?>
+            
 
             </div>
         </div>
