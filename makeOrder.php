@@ -34,12 +34,18 @@ if ($resultCartCount->num_rows > 0) {
     echo "Ошибка при проверке корзины: " . $conn->error;
 }
 
-$conn->close();
 
 
 // Проверка номера телефона
 if (strlen($number) !== 12 || substr($number, 0, 3) !== '+79') {
-    echo 'Некорректный номер телефона';
+    echo '<script>alert("Выберите размер перед добавлением в корзину");</script>';
+    echo '<script>window.history.back();</script>'; 
+    exit();
+}
+
+if (!ctype_digit(substr($number, 3))) {
+    echo '<script>alert("Выберите размер перед добавлением в корзину");</script>';
+    echo '<script>window.history.back();</script>'; 
     exit();
 }
 

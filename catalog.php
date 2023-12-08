@@ -1,3 +1,4 @@
+<!-- закончен -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,17 +24,17 @@
 
              <div class="header-icons">
                 <!-- поле поиска -->
-                <div class="search-input-container" id="search-input-container">
+                <!-- <div class="search-input-container" id="search-input-container">
                     <input type="text" placeholder="Поиск" id="search-input" class="transparent-input">
-                    <!-- <button id="search-button">Искать</button> -->
-                </div>
+                    <button id="search-button">Искать</button>
+                </div> -->
 
                 <!-- иконка  поиска-->
-                <div class="search" id="search-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
+               <!--  <div class="search" id="search-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
                     <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
                     <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
                   </svg>
-                </div> 
+                </div>  -->
              
                 <!-- инконка корзины -->
                 <div class="cart"> <a href="cart.php" class="cart-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -158,7 +159,7 @@
         <div class="contacts-title">Контакты</div>
         <ul class="contacts-menu">
             <li class="contacts-item"><a href="https://t.me/sweetieleya" class="contacts-link">Telegram</a></li>
-            <li class="contacts-item"><a href="https://www.flaticon.com/ru/free-icons/-n" class="contacts-link">favicon</a></li>
+            <li class="contacts-item"><a href="https://www.flaticon.com/ru/free-icon/letter-e_5697434?term=е&page=1&position=5&origin=tag&related_id=5697434" class="contacts-link">favicon</a></li>
             <li class="contacts-item"><a href="https://zarina.ru/" class="contacts-link">photos</a></li>
         </ul>
        </section>

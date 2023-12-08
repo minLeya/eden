@@ -37,11 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 
 
         // Выполняем запрос
-        /* if ($stmt->execute()) {
-            echo 'Товар успешно добавлен в корзину!';
+        if ($stmt->execute()) {
+            echo '<script>alert("Товар успешно добавлен в корзину!");</script>';
+            echo '<script>window.history.back();</script>';
+            echo '<script>window.location.href = window.location.href;</script>'; // Перезагрузка страницы
+
+
         } else {
             echo 'Ошибка при добавлении в корзину: ' . $conn->error;
-        } */
+        }
 
         // Закрываем соединение
         $stmt->close();
@@ -76,18 +80,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
              <div class="logo-title"><a href="index.php" class="logo-link">eden</a></div>
 
              <div class="header-icons">
-                <!-- поле поиска -->
-                <div class="search-input-container" id="search-input-container">
+                <!-- <div class="search-input-container" id="search-input-container">
                     <input type="text" placeholder="Поиск" id="search-input" class="transparent-input">
-                    <!-- <button id="search-button">Искать</button> -->
+                    
                 </div>
 
-                <!-- иконка  поиска-->
                 <div class="search" id="search-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
                     <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
                     <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
                   </svg>
-                </div> 
+                </div>  -->
              
                 <!-- инконка корзины -->
                 <div class="cart"> <a href="cart.php" class="cart-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -159,96 +161,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-           /*  $product_id = $_GET['id_product'];
-
-                    $sql = "SELECT product.*, photo.path, GROUP_CONCAT(sizes.id_size) AS all_size_ids, GROUP_CONCAT(sizes.rus_size) AS all_sizes
-                    FROM product
-                    INNER JOIN photo ON product.id_photo = photo.id_photo
-                    INNER JOIN available_sizes ON product.id_product = available_sizes.id_product
-                    INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
-                    WHERE product.id_product = $product_id
-                    GROUP BY product.id_product"; 
-
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<div class="product-image">';
-                    echo '<img src="' . $row['path'] . '" alt="product-name">';
-                    echo '</div>';
-                    echo '<div class="product-info">';
-                    echo '<h2 class="product-name">' . $row['name'] . '</h2>';
-                    echo '<p class="product-price">' . $row['product_price'] . ' ₽</p>';
-
-                    echo '<div class="available-sizes">';
-                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
-
-                    $sizes = explode(",", $row['all_size_ids']); // Получаем массив id_size
-                    $russian_sizes = explode(",", $row['all_sizes']); // Получаем массив rus_size
-
-                    for ($i = 0; $i < count($sizes); $i++) {
-                        echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
-                        echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
-                    }
-                    echo '<div class="button-class">';
-                    echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
-                    echo '</div>';
-
-                    echo '</form>';
-                    echo '</div>';
-                }
-            } else {
-                echo "Нет информации о товаре.";
-            }
-            $conn->close();
-            ?> */
-            /* $product_id = $_GET['id_product'];
-
-            $sql = "SELECT product.*, photo.path, GROUP_CONCAT(available_sizes.id_sizes) AS all_size_ids, GROUP_CONCAT(sizes.rus_size) AS all_sizes
-                    FROM product
-                    INNER JOIN photo ON product.id_photo = photo.id_photo
-                    INNER JOIN (
-                        SELECT available_sizes.id_product, available_sizes.id_sizes
-                        FROM available_sizes
-                        INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
-                        WHERE available_sizes.count > 0
-                    ) AS available_sizes ON product.id_product = available_sizes.id_product
-                    INNER JOIN sizes ON available_sizes.id_sizes = sizes.id_size
-                    WHERE product.id_product = $product_id
-                    GROUP BY product.id_product"; 
-            
-            $result = $conn->query($sql);
-            
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo '<div class="product-image">';
-                    echo '<img src="' . $row['path'] . '" alt="product-name">';
-                    echo '</div>';
-                    echo '<div class="product-info">';
-                    echo '<h2 class="product-name">' . $row['name'] . '</h2>';
-                    echo '<p class="product-price">' . $row['product_price'] . ' ₽</p>';
-            
-                    echo '<div class="available-sizes">';
-                    echo '<form method="post" action="addToCart.php?product_id=' . $row['id_product'] . '">';
-            
-                    $sizes = explode(",", $row['all_size_ids']); // Получаем массив id_size
-                    $russian_sizes = explode(",", $row['all_sizes']); // Получаем массив rus_size
-            
-                    for ($i = 0; $i < count($sizes); $i++) {
-                        echo '<input type="radio" id="' . trim($russian_sizes[$i]) . '" name="selected_size" value="' . trim($sizes[$i]) . '" data-id="' . trim($sizes[$i]) . '" style="display: none;">';
-                        echo '<label for="' . trim($russian_sizes[$i]) . '" class="size-box" style="cursor: pointer;">' . trim($russian_sizes[$i]) . '</label>';
-                    }
-            
-                    echo '<div class="button-class">';
-                    echo '<button type="submit" class="button-add-to-cart" name="add_to_cart">Добавить в корзину</button>';
-                    echo '</div>';
-            
-                    echo '</form>';
-                    echo '</div>';
-                }
-            } else {
-                echo "Нет информации о товаре.";
-            } */
 
             $product_id = $_GET['id_product'];
 

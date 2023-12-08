@@ -30,11 +30,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId']) && isset
             $updateSql = "UPDATE cart SET quantity = quantity - 1 WHERE id_product = ? AND id_size = ?";
             $stmtUpdate = $conn->prepare($updateSql);
             $stmtUpdate->bind_param("ii", $productId, $sizeId);
-            if ($stmtUpdate->execute()) {
-                echo 'success';
-            } else {
-                echo 'error';
+            if ($stmtUpdate->execute())
+            {
+                $updateAvailableSizesSql = "UPDATE available_sizes SET count = count + 1 WHERE id_product = ? AND id_sizes = ?";
+                $stmtUpdateAvailableSizes = $conn->prepare($updateAvailableSizesSql);
+                $stmtUpdateAvailableSizes->bind_param("ii", $productId, $sizeId);
+            
+                if ($stmtUpdateAvailableSizes->execute()) {
+                    echo 'success';
+                } else {
+                    echo 'error';
+                }
             }
+            else {echo 'error';}
+            
         } else {
             // Удаление из корзины
             $deleteSql = "DELETE FROM cart WHERE id_product = ? AND id_size = ?";
