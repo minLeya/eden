@@ -54,29 +54,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 
         // Выполняем соответствующий запрос в таблице cart
         if (isset($stmtUpdateCart)) {
-            if ($stmtUpdateCart->execute()) {
+            if ($stmtUpdateCart->execute() && $stmtUpdateAvailableSizes->execute()) {
                 // Выполняем обновление в таблице available_sizes
-                if ($stmtUpdateAvailableSizes->execute()) {
-                    echo '<script>alert("Товар успешно добавлен в корзину");</script>';
-                    echo '<script>window.history.back();</script>'; // Вернуться на предыдущую страницу (ВАЖНО)
-/*                     echo '<script>window.location.reload();</script>';
- */                } else {
-                    $conn->rollback();
-                    echo 'Ошибка при добавлении в корзину: ' . $conn->error;
-                }
+               
+                echo '<script>alert("Товар успешно добавлен в корзину!");</script>';
+                echo '<script>window.history.back();</script>'; // Вернуться на предыдущую страницу (ВАЖНО)
+/*                     echo '<script>window.location.reload();</script>'; */         
             } else {
                 $conn->rollback();
                 echo 'Ошибка при добавлении в корзину: ' . $conn->error;
             }
         } else {
-            if ($stmtAddToCart->execute()) {
+            if ($stmtAddToCart->execute() && $stmtUpdateAvailableSizes->execute()) {
                 // Выполняем обновление в таблице available_sizes
-                if ($stmtUpdateAvailableSizes->execute()) {
                     $conn->commit();
-                } else {
-                    $conn->rollback();
-                    echo 'Ошибка при добавлении в корзину: ' . $conn->error;
-                }
+                    echo '<script>alert("Товар успешно добавлен в корзину!");</script>';
+                    echo '<script>window.history.back();</script>';
             } else {
                 $conn->rollback();
                 echo 'Ошибка при добавлении в корзину: ' . $conn->error;
