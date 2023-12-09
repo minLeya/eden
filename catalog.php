@@ -163,6 +163,6 @@
        </section>
     </footer>
 
-    <script src="js/catalog.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

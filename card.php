@@ -240,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
     </footer>
 
     <script src="js/card.js"></script>
-    <script src="js/catalog.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
 </html>

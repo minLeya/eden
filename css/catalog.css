@@ -55,37 +55,3 @@
     color:#333;
     text-decoration: none;
 }
-
-.footer {
-    background: url(../img/footer-bg.png);
-    background-size: cover;
-    padding: 100px 0px;
-    color:white;
-    display: flex;
-    font-size:small;
-}
-
-.help-menu, .contacts-menu {
-    list-style: none;
-    padding: 0;
-}
-
-.help-link, .contacts-link {
-    text-decoration: none;
-    color:white;
-}
-
-.help-title, .contacts-title {
-    padding-bottom: 15px;
-    text-transform: uppercase;
-}
-
-.help {
-    display: inline-block;
-    margin-left: 40%;
-}
-
-.contacts {
-    display: inline-block;
-    margin-left: 10%;
-}
