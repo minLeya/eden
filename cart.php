@@ -226,13 +226,13 @@
    
     <footer class="footer">
        
-       <section class="help">
+     <!--   <section class="help">
         <div class="help-title">Помощь</div>
         <ul class="help-menu">
             <li class="help-item"><a href="#" class="help-link">Покупка</a></li>
             <li class="help-item"><a href="#" class="help-link">Магазины</a></li>
         </ul>
-       </section>
+       </section> -->
         
        <section class="contacts">
         <div class="contacts-title">Контакты</div>

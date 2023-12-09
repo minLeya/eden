@@ -110,6 +110,10 @@ if ($resultCartCount) {
             if (!$conn->query($clearCartSql)) {
                 echo "Ошибка при очистке корзины: " . $conn->error;
             }
+            else {
+                echo '<script>alert("Заказ успешно оформлен!");</script>';
+            }
+            
         }
         else{
             echo "Нет товаров в корзине. Ошибка при получении данных о количестве и стоимости товаров.";
