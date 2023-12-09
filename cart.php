@@ -126,9 +126,18 @@
 
                         echo '<div class="product-detail-item">Цена: ' . $row['product_price'] . ' ₽</div>';
                         echo '<div class="product-detail-item">Размер: ' . $row['rus_size'] . '(' . $row['international_size'] . ')' . '</div>';
-                        echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>';
+                       /*  echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>'; */
+
+                       echo '<div class="quantity-control">';
+                       echo '<button class="minus-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">-</button>';
+                       echo '<div class="product-quantity">' . $row['quantity'] . '</div>';
+                       echo '<button class="plus-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">+</button>';
+                       echo '</div>';
+                       
                         echo '</div>';
-                        echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">Удалить</button>';
+
+
+                        echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">Удалить</button>'; /* переделать так, чтобы удалял всю позицию */
                         echo '</div>';
                         echo '</li>';
                     } 
