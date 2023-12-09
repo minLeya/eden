@@ -359,23 +359,20 @@ if ($resultCartCount) {
     </main>
    
     <footer class="footer">
-       
-      <!--  <section class="help">
-        <div class="help-title">Помощь</div>
+       <section class="help">
+        <div class="help-title">Кредиты</div>
         <ul class="help-menu">
-            <li class="help-item"><a href="#" class="help-link">Покупка</a></li>
-            <li class="help-item"><a href="#" class="help-link">Магазины</a></li>
-        </ul>
-       </section> -->
+            <li class="contacts-item"><a href="https://www.flaticon.com/ru/free-icon/letter-e_5697434?term=е&page=1&position=5&origin=tag&related_id=5697434" class="contacts-link">favicon</a></li>
+            <li class="contacts-item"><a href="https://zarina.ru/" class="contacts-link">photos</a></li>        </ul>
+       </section>
         
        <section class="contacts">
         <div class="contacts-title">Контакты</div>
         <ul class="contacts-menu">
-            <li class="contacts-item"><a href="#mytg" class="contacts-link">Telegram</a></li>
-            <li class="contacts-item"><a href="https://www.flaticon.com/ru/free-icons/-n" class="contacts-link">favicon</a></li>
+            <li class="contacts-item"><a href="https://t.me/sweetieleya" class="contacts-link">Telegram</a></li>
+
         </ul>
        </section>
-       
     </footer>
 
     <script src="js/catalog.js"></script>
