@@ -59,7 +59,11 @@ ul {
     background-color: rgba(142, 6, 6, 0.812);
 }
 
-.product-info button {
+.quantity-control button:hover {
+    background-color: #bababac6;
+}
+
+.product-info .delete-button {
     height: 35px;
     width: 85px;
     background-color: black;
@@ -72,10 +76,11 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    line-height: 35px; /* Устанавливаем высоту кнопки равной высоте текста */
+    line-height: 35px;
     font-size: 85%;
 }
 
+ 
 .title{
     font-size:150%;
     margin-left: 200px;
@@ -118,7 +123,7 @@ ul {
     width: 180px;
     margin: 30px auto;
     display: block;
-} 
+}  
 
   /* Стили для формы оформления заказа */
 .order-form {
@@ -146,6 +151,38 @@ ul {
 #address {
     color: black; /* Цвет текста для выбранных элементов */
 }
-  
 
-  
+
+/* Стили для кнопок минуса и плюса */
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-control button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 20px; /* Центрирование текста по вертикали */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.minus-button,
+.plus-button {
+    background-color: transparent;
+    border-radius: 19px;
+    color: black;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;;
+}
+
+.plus-button {
+    margin-left: 5px;
+}

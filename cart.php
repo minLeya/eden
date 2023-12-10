@@ -113,32 +113,33 @@
                     while ($row = $result->fetch_assoc()) {
                         echo '<li class="product">';
 
-                        echo '<a href="card.php?id_product=' . $row['id_product'] . '" class="product-link">';
-                        echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">'; 
-                        echo '</a>';
+                            echo '<a href="card.php?id_product=' . $row['id_product'] . '" class="product-link">';
+                                echo '<img src="' . $row['path'] . '" alt="' . $row['name'] . '">'; 
+                            echo '</a>';
 
-                        echo '<div class="product-info">';
-                        echo '<div class="product-details">';
+                            echo '<div class="product-info">';
+                                echo '<div class="product-details">';
 
-                        echo '<a href="card.php?id_product=' . $row['id_product'] . '" class="product-link">';
-                        echo '<div class="product-detail-item">' . $row['name'] . '</div>';
-                        echo '</a>';
+                                    echo '<a href="card.php?id_product=' . $row['id_product'] . '" class="product-link">';
+                                        echo '<div class="product-detail-item">' . $row['name'] . '</div>';
+                                    echo '</a>';
 
-                        echo '<div class="product-detail-item">Цена: ' . $row['product_price'] . ' ₽</div>';
-                        echo '<div class="product-detail-item">Размер: ' . $row['rus_size'] . '(' . $row['international_size'] . ')' . '</div>';
-                       /*  echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>'; */
+                                    echo '<div class="product-detail-item">Цена: ' . $row['product_price'] . ' ₽</div>';
+                                    echo '<div class="product-detail-item">Размер: ' . $row['rus_size'] . '(' . $row['international_size'] . ')' . '</div>';
+                                /*echo '<div class="product-detail-item">Количество: ' . $row['quantity'] . '</div>'; */
 
-                       echo '<div class="quantity-control">';
-                       echo '<button class="minus-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">-</button>';
-                       echo '<div class="product-quantity">' . $row['quantity'] . '</div>';
-                       echo '<button class="plus-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">+</button>';
-                       echo '</div>';
-                       
-                        echo '</div>';
+                                    echo '<div class="quantity-control">';
+                                        echo '<button class="minus-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">-</button>';
+                                        echo '<div class="product-quantity">' . $row['quantity'] . '</div>';
+                                        echo '<button class="plus-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">+</button>';
+                                    echo '</div>';
+                            
+                                echo '</div>';
 
+                                echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">Удалить</button>'; /* переделать так, чтобы удалял всю позицию */
+                                
+                            echo '</div>';
 
-                        echo '<button class="delete-button" data-product-id="' . $row['id_product'] . '" data-size-id="' . $row['id_size'] . '">Удалить</button>'; /* переделать так, чтобы удалял всю позицию */
-                        echo '</div>';
                         echo '</li>';
                     } 
                 }
@@ -226,8 +227,9 @@
 
                 </div>
                 
-
+                <div class="order-button-class">
                 <button type="submit" class="order-button">Оформить заказ</button>
+                </div>
             </form>
         </div>
 
@@ -276,6 +278,56 @@
             });
         });
     </script>
+
+<script>
+    // Функция для отправки AJAX запроса на обновление количества товара
+    function updateQuantity(productId, sizeId, action) {
+        // Создаем объект XMLHttpRequest
+        var xhr = new XMLHttpRequest();
+
+        // Устанавливаем параметры запроса (POST-запрос на файл updateQuantity.php)
+        xhr.open("POST", "updateQuantity.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        // Формируем данные для отправки
+        var params = "productId=" + productId + "&sizeId=" + sizeId + "&action=" + action;
+
+        // Отправляем запрос
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText === 'success') {
+                location.reload();
+                    // Если запрос выполнен успешно, обновляем отображение или другие действия
+                    // Например, обновление количества товара на странице
+                    // Пример: document.getElementById("quantity-" + productId).innerText = "Новое количество";
+                } else {
+                    // Если произошла ошибка
+                    console.log("Ошибка при обновлении количества товара");
+                }
+            }
+        };
+        // Отправляем запрос с данными
+        xhr.send(params);
+    }
+
+    // Обработчики для кнопок "+" и "-"
+    document.querySelectorAll('.minus-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var productId = button.dataset.productId;
+            var sizeId = button.dataset.sizeId;
+            updateQuantity(productId, sizeId, 'decrement');
+        });
+    });
+
+    document.querySelectorAll('.plus-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var productId = button.dataset.productId;
+            var sizeId = button.dataset.sizeId;
+            updateQuantity(productId, sizeId, 'increment');
+        });
+    });
+</script>
+
 
 </body>
 </html>
