@@ -130,10 +130,8 @@
                     echo '<h2 class="name"><a class="name-link" href="card.php?id_product=' . $row['id_product'] . '">' . $row['name'] . '</a></h2>';
       
                     echo '<p class="price">' . $row['product_price'] . ' ₽</p>';
-                    /* echo '<button class="button-add-to-cart">Добавить в корзину</button>'; */ /* убрала кнопку */
                     echo '</div>';
 
-                    /* осталось применить стили чтобы карточка выглядела нормально */
                 }
             } else {
                 echo "Нет товаров в базе данных.";
