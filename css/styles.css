@@ -159,3 +159,50 @@
     object-fit: cover; 
     filter: blur(4px);
 }
+
+/* футер закончен */
+.footer {
+    background: url(../img/footer-bg.png);
+    background-size: cover;
+    padding: 100px 0px;
+    color:white;
+    display: flex;
+    font-size:small;
+    
+}
+
+.help-menu, .contacts-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.help-link, .contacts-link {
+    text-decoration: none;
+    color:white;
+}
+
+.help-title, .contacts-title {
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.help {
+    display: inline-block;
+    margin-left: 40%;
+}
+
+.contacts {
+    display: inline-block;
+    margin-left: 10%;
+}
+
+
+
+.main {
+    flex: 1; /* Это делает основной контент (main) растягиваемым, чтобы он занимал доступное пространство между header и footer. */
+    overflow-y: auto; /* Это позволяет добавить вертикальный скролл, если контент в main превышает высоту видимой области. */
+}
+
+.footer {
+    margin-top: auto; /* Это обеспечивает, чтобы футер был прижат внизу, после основного контента. */
+}
