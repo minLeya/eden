@@ -259,11 +259,12 @@
         $('.delete-button').on('click', function() {
         var productId = $(this).data('product-id');
         var sizeId = $(this).data('size-id');
+        var quantity = $(this).siblings('.quantity-control').find('.product-quantity').text(); // Получаем количество товара
 
         $.ajax({
             type: 'POST',
             url: 'removeFromCart.php',
-            data: { productId: productId, sizeId: sizeId },
+            data: { productId: productId, sizeId: sizeId, quantity: quantity }, // Добавляем quantity в данные запроса
             success: function(response) {
                 if (response === 'success') {
                     location.reload();
@@ -274,9 +275,10 @@
             error: function() {
                 alert('Произошла ошибка при отправке запроса');
             }
-                });
-            });
         });
+    });
+});
+
     </script>
 
 <script>
