@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         exit();
     } else {
         // Выбранный размер не пустой - обрабатываем добавление в корзину
-        // 1. Проверяем, есть ли уже товар в корзине
+        //  Проверяем, есть ли уже товар в корзине
         $checkCartItemSql = "SELECT * FROM cart WHERE id_product = ? AND id_size = ?";
         $stmtCheckCartItem = $conn->prepare($checkCartItemSql);
         $stmtCheckCartItem->bind_param("ii", $product_id, $selected_size);
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
             $stmtAddToCart->bind_param("ii", $product_id, $selected_size);
         }
 
-        // 2. Обновляем count в таблице available_sizes
+        //  Обновляем count в таблице available_sizes
         $updateAvailableSizesSql = "UPDATE available_sizes SET count = count - 1 WHERE id_product = ? AND id_sizes = ? AND count > 0";
         $stmtUpdateAvailableSizes = $conn->prepare($updateAvailableSizesSql);
         $stmtUpdateAvailableSizes->bind_param("ii", $product_id, $selected_size);

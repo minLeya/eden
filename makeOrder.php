@@ -1,4 +1,3 @@
-<!-- готово. больше не переходит после оформления заказа. очистка корзины после оформления заказа -->
 <?php
 $servername = "localhost";
 $username = "root";
@@ -157,16 +156,6 @@ if ($resultCartCount) {
              <div class="logo-title"><a href="index.php" class="logo-link">eden</a></div>
 
              <div class="header-icons">
-              <!--   <div class="search-input-container" id="search-input-container">
-                    <input type="text" placeholder="Поиск" id="search-input" class="transparent-input">
-                </div>
-
-                <div class="search" id="search-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
-                    <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
-                    <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
-                  </svg>
-                </div>  -->
-             
                 <!-- инконка корзины -->
                 <div class="cart"> <a href="cart.php" class="cart-link"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -204,7 +193,7 @@ if ($resultCartCount) {
                 die("Connection failed: " . $conn->connect_error);
             }
 
-            // SQL-запрос для получения списка категорий
+            // Получение списка категорий
             $sql = "SELECT * FROM category";
             $result = $conn->query($sql);
 
@@ -289,7 +278,7 @@ if ($resultCartCount) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // SQL-запрос для получения общего количества и стоимости товаров в корзине
+        // Получение общего количества и стоимости товаров в корзине
         $summarySql = "SELECT SUM(cart.quantity) AS totalQuantity, SUM(product.product_price * cart.quantity) AS totalPrice
                     FROM cart
                     JOIN product ON cart.id_product = product.id_product";

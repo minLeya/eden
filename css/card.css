@@ -1,4 +1,4 @@
-/* Стили для центрирования карточки товара */
+/* Стили для карточки товара */
 .main {
     display: flex;
     justify-content: center;
@@ -9,16 +9,13 @@
 .product-card {
 
     display: flex;
-   /*  border: 1px solid #e0e0e0;
-    border-radius: 5px; */
     overflow: hidden;
     background-color: #fff;
-   /*  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */ /* Эффект тени для карточки */
     margin-top: 100px;
 }
 
 .product-image img {
-    width: 450px; /* Ширина изображения */
+    width: 450px; 
     height: auto;
     object-fit: cover;
 }
@@ -29,7 +26,6 @@
     padding-right: 100px;
 }
 
-/* Дополнительные стили для описания товара, которые нужно настроить под ваш дизайн */
 .product-name {
     margin-top: 0;
     font-size: 1.5em;
@@ -50,10 +46,10 @@
     width: 100%;
     box-sizing: border-box;
     text-align: center;
-    border-radius: 25px; /* Задаем радиус закругления углов */
-    background-color: black; /* Цвет фона кнопки */
-    color: white; /* Цвет текста */
-    padding: 10px 20px; /* Отступы внутри кнопки */
+    border-radius: 25px; 
+    background-color: black; 
+    color: white; 
+    padding: 10px 20px; 
   }
 
 .size-box {
@@ -89,5 +85,5 @@
 }
 
 .button-add-to-cart {
-    line-height: 1; /* Устанавливаем высоту строки, равную высоте кнопки */
+    line-height: 1; 
 }

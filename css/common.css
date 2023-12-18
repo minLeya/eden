@@ -4,7 +4,6 @@
 }
 
 body {
-/*     background-color: #EFEFEF;*/
     overflow: auto;
     background-color: white;
 }
@@ -105,29 +104,6 @@ body {
     display: inline-block;
 }
 
-/* Скрыть поле для ввода и кнопку поиска по умолчанию */
-#search-input-container {
-    display: none;
-    size:20px;
-}
-
-/* поле ввода  */
-#search-input {
-    padding: 5px;
-    border-bottom: 1px solid black;
-}
-
-/* Стили для поля поиска */
-.transparent-input {
-    background: transparent; /* Делаем фон поля поиска прозрачным */
-    border: none;
-    outline: none;
-    color: black;
-    padding: 5px;
-    height: 25px;
-    width: 180px;
-}
-
 .header-icons {
     display: flex;
     align-items: center;
@@ -175,13 +151,11 @@ body {
     margin-left: 10%;
 }
 
-
-
 .main {
-    flex: 1; /* Это делает основной контент (main) растягиваемым, чтобы он занимал доступное пространство между header и footer. */
-    overflow-y: auto; /* Это позволяет добавить вертикальный скролл, если контент в main превышает высоту видимой области. */
+    flex: 1; 
+    overflow-y: auto;
 }
 
 .footer {
-    margin-top: auto; /* Это обеспечивает, чтобы футер был прижат внизу, после основного контента. */
+    margin-top: auto; 
 }

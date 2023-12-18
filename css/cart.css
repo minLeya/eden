@@ -46,10 +46,9 @@ ul {
 }
 
 .product-detail-item {
-    padding: 2px 0; /* Регулируемый отступ между элементами */
+    padding: 2px 0; 
     font-size: 90%;
-/*     text-transform: uppercase;
- */}
+}
 
 .product-link {
     text-decoration: none;
@@ -104,7 +103,7 @@ ul {
 }
 
 .quantity-and-total-price p, .quantity-and-total-price-value p {
-    margin-bottom: 5px; /* Отступ между текстом и числами */
+    margin-bottom: 5px;
 }
 
 .quantity-and-total-price span, .quantity-and-total-price-value span {
@@ -149,9 +148,8 @@ ul {
 }
  
 #address {
-    color: black; /* Цвет текста для выбранных элементов */
+    color: black; 
 }
-
 
 /* Стили для кнопок минуса и плюса */
 .quantity-control {
